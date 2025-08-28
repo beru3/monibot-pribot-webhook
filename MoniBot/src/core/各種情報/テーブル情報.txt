@@ -1,0 +1,150 @@
+mysql> show tables;
++-----------------------+
+| Tables_in_backlog_db  |
++-----------------------+
+| tbl_assignmenthistory |
+| tbl_hospital          |
+| tbl_pendingaccounts   |
+| tbl_staff             |
+| tbl_staff_backup      |
+| tbl_staff_teams       |
++-----------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+
+mysql> describe tbl_assignmenthistory:
+    -> describe tbl_assignmenthistory;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+describe tbl_assignmenthistory' at line 1
+mysql> describe tbl_assignmenthistory;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| 割り当てID          | int         | NO   | PRI | NULL    | auto_increment |
+| 会計ID              | int         | YES  | MUL | NULL    |                |
+| スタッフID          | int         | YES  | MUL | NULL    |                |
+| 割り当て時間        | datetime    | YES  |     | NULL    |                |
+| Backlogチケット番号 | varchar(20) | YES  |     | NULL    |                |
+| 差戻時間            | datetime    | YES  |     | NULL    |                |
+| 差戻元スタッフID    | int         | YES  | MUL | NULL    |                |
+| 元チケット番号      | varchar(20) | YES  |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql>
+
+mysql> describe tbl_hospital;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| 病院ID       | int          | NO   | PRI | NULL    |       |
+| 病院名       | varchar(100) | YES  |     | NULL    |       |
+| 電子カルテ名 | varchar(100) | YES  |     | NULL    |       |
+| チーム       | varchar(100) | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe tbl_pendingaccounts;
++---------------------+--------------------------------+------+-----+---------+-------+
+| Field               | Type                           | Null | Key | Default | Extra |
++---------------------+--------------------------------+------+-----+---------+-------+
+| 会計ID              | int                            | NO   | PRI | NULL    |       |
+| 病院ID              | int                            | YES  | MUL | NULL    |       |
+| 患者ID              | varchar(50)                    | YES  |     | NULL    |       |
+| 診療科              | varchar(50)                    | YES  |     | NULL    |       |
+| 診察日              | date                           | YES  |     | NULL    |       |
+| 診察時間            | time                           | YES  |     | NULL    |       |
+| チケット状態        | enum('未割当','割当済','差戻') | YES  |     | NULL    |       |
+| 作成時間            | datetime                       | YES  |     | NULL    |       |
+| Backlogチケット番号 | varchar(20)                    | YES  |     | NULL    |       |
+| 再会計フラグ        | tinyint(1)                     | NO   |     | 0       |       |
++---------------------+--------------------------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql>
+
+mysql>
+
+mysql> describe tbl_staff;
++-------------------+------------------------------------+------+-----+---------+----------------+
+| Field             | Type                               | Null | Key | Default | Extra          |
++-------------------+------------------------------------+------+-----+---------+----------------+
+| スタッフID        | int                                | NO   | PRI | NULL    | auto_increment |
+| 名前              | varchar(100)                       | YES  |     | NULL    |                |
+| BacklogユーザーID | varchar(100)                       | YES  | UNI | NULL    |                |
+| ステータス        | enum('在籍','在籍(処理中)','不在') | YES  |     | NULL    |                |
+| 最終割り当て時間  | datetime                           | YES  |     | NULL    |                |
+| 最終同期時間      | datetime                           | YES  |     | NULL    |                |
++-------------------+------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> describe tbl_staff_teams;
++------------+--------------+------+-----+-------------------+-------------------+
+| Field      | Type         | Null | Key | Default           | Extra             |
++------------+--------------+------+-----+-------------------+-------------------+
+| スタッフID | int          | NO   | PRI | NULL              |                   |
+| チーム     | varchar(100) | NO   | PRI | NULL              |                   |
+| 作成日時   | datetime     | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++------------+--------------+------+-----+-------------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> show index from tbl_assignmenthistory;
++-----------------------+------------+------------------------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table                 | Non_unique | Key_name                     | Seq_in_index | Column_name      | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-----------------------+------------+------------------------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| tbl_assignmenthistory |          0 | PRIMARY                      |            1 | 割り当てID       | A         |        2351 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_assignmenthistory |          1 | 会計ID                       |            1 | 会計ID           | A         |        2306 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| tbl_assignmenthistory |          1 | tbl_assignmenthistory_ibfk_2 |            1 | スタッフID       | A         |           7 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| tbl_assignmenthistory |          1 | fk_staff_revert              |            1 | 差戻元スタッフID | A         |           8 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-----------------------+------------+------------------------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+4 rows in set (0.01 sec)
+
+mysql>
+
+mysql> show index from tbl_hospital;
++--------------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table        | Non_unique | Key_name          | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| tbl_hospital |          0 | PRIMARY           |            1 | 病院ID      | A         |           8 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_hospital |          1 | idx_hospital_team |            1 | チーム      | A         |           3 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++--------------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql> show index from tbl_pendingaccounts;
++---------------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table               | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| tbl_pendingaccounts |          0 | PRIMARY  |            1 | 会計ID      | A         |        2593 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_pendingaccounts |          1 | 病院ID   |            1 | 病院ID      | A         |          11 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql>
+
+mysql> show index from tbl_staff;
++-----------+------------+-------------------+--------------+-------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table     | Non_unique | Key_name          | Seq_in_index | Column_name       | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-----------+------------+-------------------+--------------+-------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| tbl_staff |          0 | PRIMARY           |            1 | スタッフID        | A         |           7 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_staff |          0 | BacklogユーザーID |            1 | BacklogユーザーID | A         |           7 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-----------+------------+-------------------+--------------+-------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql> tbl_staff_teams;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tbl_staff_teams' at line 1
+mysql> show index from tbl_staff_teams;
++-----------------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table           | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-----------------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| tbl_staff_teams |          0 | PRIMARY        |            1 | スタッフID  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_staff_teams |          0 | PRIMARY        |            2 | チーム      | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| tbl_staff_teams |          1 | idx_staff_team |            1 | チーム      | A         |           3 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++-----------------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.01 sec)
+
+mysql>

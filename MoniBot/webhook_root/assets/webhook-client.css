@@ -1,0 +1,36 @@
+/* ウェブフッククライアント専用スタイル */
+textarea {
+    font-family: 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+    resize: vertical;
+}
+
+pre {
+    font-family: 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+}
+
+/* 送信結果のアニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#result {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 自動送信ステータスのカウンター色 */
+#auto-count {
+    color: #2563eb; /* Tailwind の blue-600 */
+}
+
+/* カウントアップアニメーション */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.count-pulse {
+    animation: pulse 0.5s ease-in-out;
+}
