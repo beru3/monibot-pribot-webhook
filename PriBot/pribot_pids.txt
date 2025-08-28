@@ -1,0 +1,4 @@
+# PriBot Production Process Information
+WINDOW_TITLE=PriBot_Production_20250828_070107 
+STARTUP_METHOD=INTERACTIVE 
+START_TIME=2025/08/28  7:01:12.21 

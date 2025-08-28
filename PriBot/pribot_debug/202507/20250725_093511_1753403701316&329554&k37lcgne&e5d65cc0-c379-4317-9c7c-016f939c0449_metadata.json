@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250725_093511",
+  "original_file": "1753403701316&329554&k37lcgne&e5d65cc0-c379-4317-9c7c-016f939c0449.pdf",
+  "debug_file": "20250725_093511_1753403701316&329554&k37lcgne&e5d65cc0-c379-4317-9c7c-016f939c0449.pdf",
+  "error_reason": "医療機関マッチング失敗: 三宅村国民健康保険直営中央診療所",
+  "file_size": 117524,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 1562255360,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 118710697984,
+      "free": 134961852416
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-07-25T09:35:11.758101"
+  }
+}

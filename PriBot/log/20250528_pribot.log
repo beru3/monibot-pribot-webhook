@@ -1,0 +1,571 @@
+2025-05-28 06:54:02,540 - pribot - INFO - ====== PriBot ログセッション開始 ======
+2025-05-28 06:54:02,545 - pribot - INFO - PriBot を開始します
+2025-05-28 06:54:02,552 - pribot - INFO - Backlog APIから監視フォルダとエラーフォルダの設定を取得します
+2025-05-28 06:54:02,718 - pribot - INFO - 監視フォルダパス: .../診療報酬請求事務集中センターOASIS INNOVATION/pribot
+2025-05-28 06:54:02,718 - pribot - INFO - エラーフォルダパス: .../pribot/error
+2025-05-28 06:54:02,731 - pribot - INFO - Backlog APIリクエストを開始します
+2025-05-28 06:54:02,799 - pribot - INFO - プロジェクト名: PriBot管理
+2025-05-28 06:54:02,875 - pribot - INFO - 取得した全課題数: 16
+2025-05-28 06:54:02,875 - pribot - INFO - 存在する課題タイプ: PriBot設定, 医療機関
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\くれクリニック\くれクリニック_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\いたがき総合診療クリニック\自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\そけん小児科\そけん小児科_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\Scan\NGC_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\阿南いしばし医院\阿南いしばし医院_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_薬情'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\照葉浅部クリニック\照葉浅部クリニック_自動印刷'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\薬剤情報提供書（A4）'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\請求書'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\明細書'
+2025-05-28 06:54:02,886 - pribot - INFO - 課題 PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-05-28 06:54:02,886 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-05-28 06:54:02,891 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-05-28 06:54:02,891 - pribot - INFO - 監視対象の医療機関数: 9, スキップした課題数: 1
+2025-05-28 06:54:02,891 - pribot - INFO - PriBot 監視フォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot
+2025-05-28 06:54:02,891 - pribot - INFO - PriBot エラーフォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot\error
+2025-05-28 06:54:02,891 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-05-28 06:54:02,891 - pribot - INFO - ファイル監視を開始しました
+2025-05-28 09:02:12,844 - pribot - INFO - 新しいPDFファイルを検出: 1748390518875&0&wjfv76i1&b3232d94-15bb-4e21-9220-56b1efdf8316.pdf
+2025-05-28 09:02:13,101 - pribot - INFO - フォーマット識別: 診療費明細書 (ID: 4)
+2025-05-28 09:02:13,103 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:02:13,104 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:02:13,104 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:02:13,107 - pribot - INFO - [成功] ファイルをコピーしました: 1748390518875&0&wjfv76i1&b3232d94-15bb-4e21-9220-56b1efdf8316.pdf -> .../照葉浅部クリニック_自動印刷/1748390518875&0&wjfv76i1&b3232d94-15bb-4e21-9220-56b1efdf8316.pdf
+2025-05-28 09:02:13,108 - pribot - INFO - 元ファイルを削除しました: .../pribot/1748390518875&0&wjfv76i1&b3232d94-15bb-4e21-9220-56b1efdf8316.pdf
+2025-05-28 09:02:13,109 - pribot - INFO - PDFファイルの処理が完了しました: 1748390518875&0&wjfv76i1&b3232d94-15bb-4e21-9220-56b1efdf8316.pdf
+2025-05-28 09:02:13,109 - pribot - INFO - 
+2025-05-28 09:03:33,191 - pribot - INFO - 新しいPDFファイルを検出: 1748390601049&0&j4rr3njx&98412bb1-e607-4272-b5d0-a64137c928c5.pdf
+2025-05-28 09:03:33,300 - pribot - INFO - フォーマット識別: 診療費明細書 (ID: 4)
+2025-05-28 09:03:33,316 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:03:33,316 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:03:33,316 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:03:33,316 - pribot - INFO - [成功] ファイルをコピーしました: 1748390601049&0&j4rr3njx&98412bb1-e607-4272-b5d0-a64137c928c5.pdf -> .../照葉浅部クリニック_自動印刷/1748390601049&0&j4rr3njx&98412bb1-e607-4272-b5d0-a64137c928c5.pdf
+2025-05-28 09:03:33,316 - pribot - INFO - 元ファイルを削除しました: .../pribot/1748390601049&0&j4rr3njx&98412bb1-e607-4272-b5d0-a64137c928c5.pdf
+2025-05-28 09:03:33,316 - pribot - INFO - PDFファイルの処理が完了しました: 1748390601049&0&j4rr3njx&98412bb1-e607-4272-b5d0-a64137c928c5.pdf
+2025-05-28 09:03:33,316 - pribot - INFO - 
+2025-05-28 09:03:37,936 - pribot - INFO - 新しいPDFファイルを検出: 2378.pdf
+2025-05-28 09:03:38,475 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:03:38,476 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:03:38,476 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:03:38,476 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:03:38,478 - pribot - INFO - [成功] ファイルをコピーしました: 2378.pdf -> .../くれクリニック_自動印刷/2378.pdf
+2025-05-28 09:03:38,478 - pribot - INFO - 元ファイルを削除しました: .../pribot/2378.pdf
+2025-05-28 09:03:38,478 - pribot - INFO - PDFファイルの処理が完了しました: 2378.pdf
+2025-05-28 09:03:38,478 - pribot - INFO - 
+2025-05-28 09:04:15,636 - pribot - INFO - PriBot を開始します
+2025-05-28 09:04:15,636 - pribot - INFO - Backlog APIから監視フォルダとエラーフォルダの設定を取得します
+2025-05-28 09:04:15,762 - pribot - INFO - 監視フォルダパス: .../診療報酬請求事務集中センターOASIS INNOVATION/pribot
+2025-05-28 09:04:15,762 - pribot - INFO - エラーフォルダパス: .../pribot/error
+2025-05-28 09:04:15,762 - pribot - INFO - Backlog APIリクエストを開始します
+2025-05-28 09:04:15,837 - pribot - INFO - プロジェクト名: PriBot管理
+2025-05-28 09:04:15,933 - pribot - INFO - 取得した全課題数: 16
+2025-05-28 09:04:15,933 - pribot - INFO - 存在する課題タイプ: 医療機関, PriBot設定
+2025-05-28 09:04:15,933 - pribot - INFO - 課題 PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\くれクリニック\くれクリニック_自動印刷'
+2025-05-28 09:04:15,933 - pribot - INFO - 課題 PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\いたがき総合診療クリニック\自動印刷'
+2025-05-28 09:04:15,933 - pribot - INFO - 課題 PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\そけん小児科\そけん小児科_自動印刷'
+2025-05-28 09:04:15,933 - pribot - INFO - 課題 PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\Scan\NGC_自動印刷'
+2025-05-28 09:04:15,933 - pribot - INFO - 課題 PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\阿南いしばし医院\阿南いしばし医院_自動印刷'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_自動印刷'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_薬情'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\照葉浅部クリニック\照葉浅部クリニック_自動印刷'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:04:15,935 - pribot - INFO - 課題 PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\薬剤情報提供書（A4）'
+2025-05-28 09:04:15,936 - pribot - INFO - 課題 PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\請求書'
+2025-05-28 09:04:15,936 - pribot - INFO - 課題 PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\明細書'
+2025-05-28 09:04:15,936 - pribot - INFO - 課題 PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-05-28 09:04:15,936 - pribot - INFO - 監視対象の医療機関数: 9, スキップした課題数: 1
+2025-05-28 09:04:15,936 - pribot - INFO - PriBot 監視フォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot
+2025-05-28 09:04:15,938 - pribot - INFO - PriBot エラーフォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot\error
+2025-05-28 09:04:15,938 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-05-28 09:04:15,938 - pribot - INFO - ファイル監視を開始しました
+2025-05-28 09:04:38,675 - pribot - INFO - PriBot を開始します
+2025-05-28 09:04:38,675 - pribot - INFO - Backlog APIから監視フォルダとエラーフォルダの設定を取得します
+2025-05-28 09:04:38,785 - pribot - INFO - 監視フォルダパス: .../診療報酬請求事務集中センターOASIS INNOVATION/pribot
+2025-05-28 09:04:38,785 - pribot - INFO - エラーフォルダパス: .../pribot/error
+2025-05-28 09:04:38,785 - pribot - INFO - Backlog APIリクエストを開始します
+2025-05-28 09:04:38,832 - pribot - INFO - プロジェクト名: PriBot管理
+2025-05-28 09:04:38,912 - pribot - INFO - 取得した全課題数: 16
+2025-05-28 09:04:38,912 - pribot - INFO - 存在する課題タイプ: PriBot設定, 医療機関
+2025-05-28 09:04:38,912 - pribot - INFO - 課題 PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\くれクリニック\くれクリニック_自動印刷'
+2025-05-28 09:04:38,912 - pribot - INFO - 課題 PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\いたがき総合診療クリニック\自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\そけん小児科\そけん小児科_自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\Scan\NGC_自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\阿南いしばし医院\阿南いしばし医院_自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_薬情'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\照葉浅部クリニック\照葉浅部クリニック_自動印刷'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\薬剤情報提供書（A4）'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\請求書'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\明細書'
+2025-05-28 09:04:38,928 - pribot - INFO - 課題 PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-05-28 09:04:38,928 - pribot - INFO - 監視対象の医療機関数: 9, スキップした課題数: 1
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視フォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot エラーフォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot\error
+2025-05-28 09:04:38,928 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-05-28 09:04:38,928 - pribot - INFO - ファイル監視を開始しました
+2025-05-28 09:05:09,097 - pribot - INFO - 新しいPDFファイルを検出: 8417.pdf
+2025-05-28 09:05:09,338 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:05:09,340 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:05:09,340 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:05:09,340 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:05:09,342 - pribot - INFO - [成功] ファイルをコピーしました: 8417.pdf -> .../くれクリニック_自動印刷/8417.pdf
+2025-05-28 09:05:09,343 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\8417.pdf'
+2025-05-28 09:05:09,345 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:05:09,348 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:05:09,343 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\8417.pdf'
+2025-05-28 09:05:09,348 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:05:09,348 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:05:09,350 - pribot - INFO - [成功] ファイルをコピーしました: 8417.pdf -> .../くれクリニック_自動印刷/8417.pdf
+2025-05-28 09:05:09,353 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 8417.pdf -> .../error/8417.pdf
+2025-05-28 09:05:09,353 - pribot - INFO - 元ファイルを削除しました: .../pribot/8417.pdf
+2025-05-28 09:05:09,353 - pribot - INFO - PDFファイルの処理が完了しました: 8417.pdf
+2025-05-28 09:05:09,354 - pribot - INFO - 
+2025-05-28 09:05:09,354 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\8417.pdf'
+2025-05-28 09:05:09,354 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\8417.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\8417.pdf'
+2025-05-28 09:05:09,354 - pribot - INFO - 
+2025-05-28 09:06:26,272 - pribot - INFO - 新しいPDFファイルを検出: 1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,273 - pribot - INFO - 新しいPDFファイルを検出: 1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,465 - pribot - INFO - フォーマット識別: 診療費明細書 (ID: 4)
+2025-05-28 09:06:26,479 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:06:26,479 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:06:26,479 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:06:26,479 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:06:26,479 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:06:26,479 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:06:26,479 - pribot - INFO - [成功] ファイルをコピーしました: 1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf -> .../照葉浅部クリニック_自動印刷/1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,483 - pribot - INFO - [成功] ファイルをコピーしました: 1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf -> .../照葉浅部クリニック_自動印刷/1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,483 - pribot - INFO - 元ファイルを削除しました: .../pribot/1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,483 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf'
+2025-05-28 09:06:26,483 - pribot - INFO - PDFファイルの処理が完了しました: 1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf
+2025-05-28 09:06:26,483 - pribot - INFO - 
+2025-05-28 09:06:26,483 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf'
+2025-05-28 09:06:26,485 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf'
+2025-05-28 09:06:26,485 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 728, in move_to_error_dir
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748390773346&0&jobmydd4&12688828-4369-49b7-b9ff-1b0f7ee91454.pdf'
+2025-05-28 09:06:26,504 - pribot - INFO - 
+2025-05-28 09:07:29,169 - pribot - INFO - 新しいPDFファイルを検出: 2059.pdf
+2025-05-28 09:07:29,180 - pribot - INFO - 新しいPDFファイルを検出: 2059.pdf
+2025-05-28 09:07:29,346 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:07:29,346 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:07:29,346 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:07:29,346 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:07:29,352 - pribot - INFO - [成功] ファイルをコピーしました: 2059.pdf -> .../くれクリニック_自動印刷/2059.pdf
+2025-05-28 09:07:29,352 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\2059.pdf'
+2025-05-28 09:07:29,352 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\2059.pdf'
+2025-05-28 09:07:29,352 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 2059.pdf -> .../error/2059.pdf
+2025-05-28 09:07:29,352 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\2059.pdf'
+2025-05-28 09:07:29,352 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\2059.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\2059.pdf'
+2025-05-28 09:07:29,352 - pribot - INFO - 
+2025-05-28 09:07:29,402 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:07:29,402 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:07:29,402 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:07:29,402 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:07:29,406 - pribot - INFO - [成功] ファイルをコピーしました: 2059.pdf -> .../くれクリニック_自動印刷/2059.pdf
+2025-05-28 09:07:29,406 - pribot - INFO - 元ファイルを削除しました: .../pribot/2059.pdf
+2025-05-28 09:07:29,406 - pribot - INFO - PDFファイルの処理が完了しました: 2059.pdf
+2025-05-28 09:07:29,406 - pribot - INFO - 
+2025-05-28 09:08:30,915 - pribot - INFO - 新しいPDFファイルを検出: 0be62f23-6066-4794-b66d-11c36afb927e.pdf
+2025-05-28 09:08:31,036 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:08:31,038 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:08:31,038 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:31,039 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:31,040 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:31,041 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:31,041 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:31,041 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:31,042 - pribot - INFO - [成功] ファイルをコピーしました: 0be62f23-6066-4794-b66d-11c36afb927e.pdf -> .../照葉浅部クリニック_自動印刷/0be62f23-6066-4794-b66d-11c36afb927e.pdf
+2025-05-28 09:08:31,043 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,043 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,044 - pribot - INFO - [成功] ファイルをコピーしました: 0be62f23-6066-4794-b66d-11c36afb927e.pdf -> .../照葉浅部クリニック_自動印刷/0be62f23-6066-4794-b66d-11c36afb927e.pdf
+2025-05-28 09:08:31,045 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,045 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 0be62f23-6066-4794-b66d-11c36afb927e.pdf -> .../error/0be62f23-6066-4794-b66d-11c36afb927e.pdf
+2025-05-28 09:08:31,045 - pribot - INFO - 
+2025-05-28 09:08:31,045 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,048 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,048 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 728, in move_to_error_dir
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e.pdf'
+2025-05-28 09:08:31,051 - pribot - INFO - 
+2025-05-28 09:08:45,633 - pribot - INFO - 新しいPDFファイルを検出: 0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,717 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:08:45,717 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:45,717 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:45,717 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:45,717 - pribot - INFO - [成功] ファイルをコピーしました: 0be62f23-6066-4794-b66d-11c36afb927e (1).pdf -> .../照葉浅部クリニック_自動印刷/0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,717 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e (1).pdf'
+2025-05-28 09:08:45,717 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e (1).pdf'
+2025-05-28 09:08:45,730 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 0be62f23-6066-4794-b66d-11c36afb927e (1).pdf -> .../error/0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,730 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e (1).pdf'
+2025-05-28 09:08:45,730 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e (1).pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\0be62f23-6066-4794-b66d-11c36afb927e (1).pdf'
+2025-05-28 09:08:45,730 - pribot - INFO - 
+2025-05-28 09:08:45,758 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:08:45,758 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:45,758 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:45,758 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:45,758 - pribot - INFO - [成功] ファイルをコピーしました: 0be62f23-6066-4794-b66d-11c36afb927e (1).pdf -> .../照葉浅部クリニック_自動印刷/0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,758 - pribot - INFO - 元ファイルを削除しました: .../pribot/0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,763 - pribot - INFO - PDFファイルの処理が完了しました: 0be62f23-6066-4794-b66d-11c36afb927e (1).pdf
+2025-05-28 09:08:45,763 - pribot - INFO - 
+2025-05-28 09:08:50,723 - pribot - INFO - 新しいPDFファイルを検出: b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf
+2025-05-28 09:08:50,724 - pribot - INFO - 新しいPDFファイルを検出: b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf
+2025-05-28 09:08:51,017 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(縦) (ID: 1)
+2025-05-28 09:08:51,018 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(縦) (ID: 1)
+2025-05-28 09:08:51,018 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:51,018 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:51,018 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:51,019 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:51,020 - pribot - INFO - [成功] ファイルをコピーしました: b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf -> .../照葉浅部クリニック_自動印刷/b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf
+2025-05-28 09:08:51,020 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,021 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,021 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:51,021 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:51,022 - pribot - INFO - ファイルをエラーディレクトリに移動しました: b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf -> .../error/b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf
+2025-05-28 09:08:51,022 - pribot - INFO - 
+2025-05-28 09:08:51,022 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,024 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 679, in process_pdf_file
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,025 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,025 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 679, in process_pdf_file
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 728, in move_to_error_dir
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\b4807b38-20b9-4d46-b1b7-93f5ff566c12.pdf'
+2025-05-28 09:08:51,026 - pribot - INFO - 
+2025-05-28 09:08:56,002 - pribot - INFO - 新しいPDFファイルを検出: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,003 - pribot - INFO - 新しいPDFファイルを検出: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,123 - pribot - INFO - フォーマット識別: 診療費明細書 (ID: 4)
+2025-05-28 09:08:56,125 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:56,125 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:56,126 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:56,127 - pribot - INFO - [成功] ファイルをコピーしました: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf -> .../照葉浅部クリニック_自動印刷/3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,127 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf'
+2025-05-28 09:08:56,127 - pribot - INFO - フォーマット識別: 診療費明細書 (ID: 4)
+2025-05-28 09:08:56,127 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf'
+2025-05-28 09:08:56,130 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf -> .../error/3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,131 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf'
+2025-05-28 09:08:56,131 - pribot - INFO - 抽出された医療機関名: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:56,131 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf'
+2025-05-28 09:08:56,132 - pribot - INFO - 
+2025-05-28 09:08:56,132 - pribot - INFO - [成功] マッチング成功: 医療法人 吉松会 照葉浅部クリニック
+2025-05-28 09:08:56,132 - pribot - INFO - 振り分け先: 医療法人 吉松会 照葉浅部クリニック -> .../照葉浅部クリニック/照葉浅部クリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:08:56,136 - pribot - INFO - [成功] ファイルをコピーしました: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf -> .../照葉浅部クリニック_自動印刷/3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,136 - pribot - INFO - 元ファイルを削除しました: .../pribot/3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,136 - pribot - INFO - PDFファイルの処理が完了しました: 3c3ef27e-29eb-44a7-9590-cfb5b349df4c.pdf
+2025-05-28 09:08:56,136 - pribot - INFO - 
+2025-05-28 09:09:45,269 - pribot - INFO - PriBot を開始します
+2025-05-28 09:09:45,269 - pribot - INFO - Backlog APIから監視フォルダとエラーフォルダの設定を取得します
+2025-05-28 09:09:45,402 - pribot - INFO - 監視フォルダパス: .../診療報酬請求事務集中センターOASIS INNOVATION/pribot
+2025-05-28 09:09:45,402 - pribot - INFO - エラーフォルダパス: .../pribot/error
+2025-05-28 09:09:45,402 - pribot - INFO - Backlog APIリクエストを開始します
+2025-05-28 09:09:45,472 - pribot - INFO - プロジェクト名: PriBot管理
+2025-05-28 09:09:45,557 - pribot - INFO - 取得した全課題数: 16
+2025-05-28 09:09:45,563 - pribot - INFO - 存在する課題タイプ: PriBot設定, 医療機関
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\くれクリニック\くれクリニック_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\いたがき総合診療クリニック\自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\そけん小児科\そけん小児科_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\Scan\NGC_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\阿南いしばし医院\阿南いしばし医院_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_薬情'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\照葉浅部クリニック\照葉浅部クリニック_自動印刷'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\請求書兼明細書（A5）'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\メモリーケアクリニック湘南\メモリーケアクリニック湘南_自動印刷\薬剤情報提供書（A4）'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\請求書'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\ひまわりクリニックきょうごく\ひまわりクリニックきょうごく_自動印刷\明細書'
+2025-05-28 09:09:45,563 - pribot - INFO - 課題 PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\三宅村中央診療所\三宅村中央診療所_ラベル（手帳・薬袋）'
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-05-28 09:09:45,563 - pribot - INFO - 監視対象の医療機関数: 9, スキップした課題数: 1
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視フォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot エラーフォルダ: C:\Users\miyake2106\OASIS INNOAVTION Dropbox\診療報酬請求事務集中センターOASIS INNOVATION\pribot\error
+2025-05-28 09:09:45,563 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-05-28 09:09:45,563 - pribot - INFO - ファイル監視を開始しました
+2025-05-28 09:10:59,707 - pribot - INFO - 新しいPDFファイルを検出: 12779-1-l.pdf
+2025-05-28 09:10:59,707 - pribot - INFO - 新しいPDFファイルを検出: 12779-1-l.pdf
+2025-05-28 09:10:59,859 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:10:59,860 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:10:59,861 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:10:59,861 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:10:59,862 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:10:59,862 - pribot - INFO - [成功] ファイルをコピーしました: 12779-1-l.pdf -> .../くれクリニック_自動印刷/12779-1-l.pdf
+2025-05-28 09:10:59,863 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,863 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,863 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:10:59,865 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:10:59,865 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:10:59,867 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 12779-1-l.pdf -> .../error/12779-1-l.pdf
+2025-05-28 09:10:59,867 - pribot - INFO - [成功] ファイルをコピーしました: 12779-1-l.pdf -> .../くれクリニック_自動印刷/12779-1-l.pdf
+2025-05-28 09:10:59,867 - pribot - INFO - 
+2025-05-28 09:10:59,868 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,868 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,869 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,869 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 728, in move_to_error_dir
+    shutil.copy2(pdf_path, dest_path)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 448, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\miyake2106\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\12779-1-l.pdf'
+2025-05-28 09:10:59,871 - pribot - INFO - 
+2025-05-28 09:13:47,841 - pribot - INFO - 新しいPDFファイルを検出: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:47,841 - pribot - INFO - 新しいPDFファイルを検出: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:47,997 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:13:47,997 - pribot - INFO - 抽出された医療機関名: 医療法人妙泉会 阿南いしばし医院
+2025-05-28 09:13:47,997 - pribot - INFO - [成功] マッチング成功: 医療法人妙泉会 阿南いしばし医院
+2025-05-28 09:13:47,997 - pribot - INFO - 振り分け先: 医療法人妙泉会 阿南いしばし医院 -> .../阿南いしばし医院/阿南いしばし医院_自動印刷 (設定: 0_共通)
+2025-05-28 09:13:48,013 - pribot - INFO - [成功] ファイルをコピーしました: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf -> .../阿南いしばし医院_自動印刷/1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:48,014 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf'
+2025-05-28 09:13:48,014 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf'
+2025-05-28 09:13:48,014 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf -> .../error/1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:48,014 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf'
+2025-05-28 09:13:48,014 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf'
+2025-05-28 09:13:48,014 - pribot - INFO - 
+2025-05-28 09:13:48,025 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-05-28 09:13:48,025 - pribot - INFO - 抽出された医療機関名: 医療法人妙泉会 阿南いしばし医院
+2025-05-28 09:13:48,025 - pribot - INFO - [成功] マッチング成功: 医療法人妙泉会 阿南いしばし医院
+2025-05-28 09:13:48,029 - pribot - INFO - 振り分け先: 医療法人妙泉会 阿南いしばし医院 -> .../阿南いしばし医院/阿南いしばし医院_自動印刷 (設定: 0_共通)
+2025-05-28 09:13:48,029 - pribot - INFO - [成功] ファイルをコピーしました: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf -> .../阿南いしばし医院_自動印刷/1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:48,029 - pribot - INFO - 元ファイルを削除しました: .../pribot/1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:48,029 - pribot - INFO - PDFファイルの処理が完了しました: 1748391214463&394024&i9pj1f04&fa1d32cb-8577-4749-b4d3-871d0df54910.pdf
+2025-05-28 09:13:48,029 - pribot - INFO - 
+2025-05-28 09:15:56,711 - pribot - INFO - 新しいPDFファイルを検出: 1669.pdf
+2025-05-28 09:15:56,803 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:15:56,803 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:15:56,803 - pribot - INFO - フォーマット識別: 診療費請求書兼領収書(横) (ID: 3)
+2025-05-28 09:15:56,803 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:15:56,803 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:15:56,803 - pribot - INFO - [成功] ファイルをコピーしました: 1669.pdf -> .../くれクリニック_自動印刷/1669.pdf
+2025-05-28 09:15:56,803 - pribot - ERROR - [エラー] PDFファイル処理中にエラー: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1669.pdf'
+2025-05-28 09:15:56,803 - pribot - INFO - 抽出された医療機関名: 西大宮整形外科くれクリニック
+2025-05-28 09:15:56,819 - pribot - INFO - [成功] マッチング成功: 西大宮整形外科くれクリニック
+2025-05-28 09:15:56,803 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1669.pdf'
+2025-05-28 09:15:56,819 - pribot - INFO - 振り分け先: 西大宮整形外科くれクリニック -> .../くれクリニック/くれクリニック_自動印刷 (設定: 0_共通)
+2025-05-28 09:15:56,819 - pribot - INFO - [成功] ファイルをコピーしました: 1669.pdf -> .../くれクリニック_自動印刷/1669.pdf
+2025-05-28 09:15:56,821 - pribot - INFO - ファイルをエラーディレクトリに移動しました: 1669.pdf -> .../error/1669.pdf
+2025-05-28 09:15:56,821 - pribot - INFO - 元ファイルを削除しました: .../pribot/1669.pdf
+2025-05-28 09:15:56,821 - pribot - ERROR - [エラー] エラーディレクトリへの移動中にエラー: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1669.pdf'
+2025-05-28 09:15:56,821 - pribot - INFO - PDFファイルの処理が完了しました: 1669.pdf
+2025-05-28 09:15:56,821 - pribot - INFO - 
+2025-05-28 09:15:56,821 - pribot - ERROR - [エラー] スタックトレース:
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 683, in process_pdf_file
+    os.remove(pdf_path)
+PermissionError: [WinError 32] プロセスはファイルにアクセスできません。別のプロセスが使用中です。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1669.pdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py", line 732, in move_to_error_dir
+    os.remove(pdf_path)
+FileNotFoundError: [WinError 2] 指定されたファイルが見つかりません。: 'C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot\\1669.pdf'
+2025-05-28 09:15:56,821 - pribot - INFO - 

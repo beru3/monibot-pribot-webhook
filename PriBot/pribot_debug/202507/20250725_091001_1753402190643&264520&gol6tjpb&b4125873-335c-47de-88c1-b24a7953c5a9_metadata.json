@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250725_091001",
+  "original_file": "1753402190643&264520&gol6tjpb&b4125873-335c-47de-88c1-b24a7953c5a9.pdf",
+  "debug_file": "20250725_091001_1753402190643&264520&gol6tjpb&b4125873-335c-47de-88c1-b24a7953c5a9.pdf",
+  "error_reason": "医療機関マッチング失敗: ひまわりクリニックきょうごく",
+  "file_size": 41759,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 1758142464,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 118691524608,
+      "free": 134981025792
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-07-25T09:10:01.978676"
+  }
+}

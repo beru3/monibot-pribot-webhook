@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250618_095554",
+  "original_file": "ヒロセタクヤ1098.0618-02.pdf",
+  "debug_file": "20250618_095554_ヒロセタクヤ1098.0618-02.pdf",
+  "error_reason": "医療機関マッチング失敗: 様 保険種類 国保",
+  "file_size": 71680,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 513343488,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 111390928896,
+      "free": 142281621504
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-06-18T09:55:54.739451"
+  }
+}

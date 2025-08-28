@@ -1,0 +1,116 @@
+2025-08-22 14:37:47,338 - pribot - INFO - ====== PriBot ログセッション開始 ======
+2025-08-22 14:37:47,341 - pribot - INFO - PriBot (完全同期版・重複判定なし) を開始します
+2025-08-22 14:37:47,341 - pribot - INFO - Backlog APIからフォルダ設定を取得します
+2025-08-22 14:37:47,617 - pribot - INFO - 監視フォルダパス: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot監視フォルダ
+2025-08-22 14:37:47,617 - pribot - INFO - エラーフォルダパス: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot振り分けエラー
+2025-08-22 14:37:47,618 - pribot - INFO - デバッグフォルダパス: C:\Users\monibot\Desktop\wk\PriBot\pribot_debug
+2025-08-22 14:37:47,618 - pribot - INFO - Backlog APIリクエストを開始します
+2025-08-22 14:37:47,858 - pribot - INFO - 取得した全課題数: 16
+2025-08-22 14:37:47,858 - pribot - INFO - 課題 TEST_PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\くれクリニック'
+2025-08-22 14:37:47,860 - pribot - INFO - 課題 TEST_PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\いたがき総合診療クリニック'
+2025-08-22 14:37:47,860 - pribot - INFO - 課題 TEST_PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\そけん小児科'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ナゴヤガーデンクリニック'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\阿南いしばし医院'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_1_診療費請求書兼領収書(A4)'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_6_お薬手帳'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_7_お薬情報'
+2025-08-22 14:37:47,861 - pribot - INFO - 課題 TEST_PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\照葉浅部クリニック'
+2025-08-22 14:37:47,862 - pribot - INFO - 課題 TEST_PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_3_診療費請求書兼領収書(A5)'
+2025-08-22 14:37:47,862 - pribot - INFO - 課題 TEST_PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_5_処方箋'
+2025-08-22 14:37:47,862 - pribot - INFO - 課題 TEST_PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_7_お薬情報'
+2025-08-22 14:37:47,862 - pribot - INFO - 課題 TEST_PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ひまわりきょうごく_2_診療費請求書兼領収書(A4控え付き)'
+2025-08-22 14:37:47,862 - pribot - INFO - 課題 TEST_PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ひまわりきょうごく_4_診療費明細書'
+2025-08-22 14:37:47,863 - pribot - INFO - 課題 TEST_PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_8_薬袋シール'
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-08-22 14:37:47,863 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-08-22 14:37:47,864 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-08-22 14:37:47,864 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-08-22 14:37:47,864 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-08-22 14:37:47,864 - pribot - INFO - 監視対象の医療機関数: 9
+2025-08-22 14:37:47,865 - pribot - INFO - PriBot 監視フォルダ: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot監視フォルダ
+2025-08-22 14:37:47,865 - pribot - INFO - PriBot エラーフォルダ: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot振り分けエラー
+2025-08-22 14:37:47,865 - pribot - INFO - PriBot デバッグフォルダ: C:\Users\monibot\Desktop\wk\PriBot\pribot_debug
+2025-08-22 14:37:47,866 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-08-22 14:37:47,866 - pribot - INFO - デバッグファイルのクリーンアップを実行します
+2025-08-22 14:37:47,895 - pribot - INFO - 既存ファイルの処理を開始します
+2025-08-22 14:37:47,895 - pribot - INFO - 処理対象の既存ファイルはありませんでした
+2025-08-22 14:37:47,895 - pribot - INFO - 完全同期版ファイル監視を設定します（重複判定なし）
+2025-08-22 14:37:47,896 - pribot - INFO - 完全同期版ファイル監視を開始しました（重複判定なし）
+2025-08-22 14:42:50,296 - pribot - INFO - PriBot (完全同期版・重複判定なし) を開始します
+2025-08-22 14:42:50,297 - pribot - INFO - Backlog APIからフォルダ設定を取得します
+2025-08-22 14:42:50,516 - pribot - INFO - 監視フォルダパス: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot監視フォルダ
+2025-08-22 14:42:50,516 - pribot - INFO - エラーフォルダパス: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot振り分けエラー
+2025-08-22 14:42:50,516 - pribot - INFO - デバッグフォルダパス: C:\Users\monibot\Desktop\wk\PriBot\pribot_debug
+2025-08-22 14:42:50,517 - pribot - INFO - Backlog APIリクエストを開始します
+2025-08-22 14:42:50,766 - pribot - INFO - 取得した全課題数: 16
+2025-08-22 14:42:50,766 - pribot - INFO - 課題 TEST_PRIBOT-2: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\くれクリニック'
+2025-08-22 14:42:50,766 - pribot - INFO - 課題 TEST_PRIBOT-3: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\いたがき総合診療クリニック'
+2025-08-22 14:42:50,766 - pribot - INFO - 課題 TEST_PRIBOT-4: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\そけん小児科'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-5: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ナゴヤガーデンクリニック'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-6: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\阿南いしばし医院'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-7: 振り分け先 '1_診療費請求書兼領収書(縦)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_1_診療費請求書兼領収書(A4)'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-8: 振り分け先 '6_お薬手帳' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_6_お薬手帳'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-9: 振り分け先 '7_お薬情報' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_7_お薬情報'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-10: 振り分け先 '0_共通' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\照葉浅部クリニック'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-11: 振り分け先 '3_診療費請求書兼領収書(横)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_3_診療費請求書兼領収書(A5)'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-12: 振り分け先 '5_処方箋' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_5_処方箋'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-13: 振り分け先 '7_お薬情報' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\メモリーケアクリニック_7_お薬情報'
+2025-08-22 14:42:50,767 - pribot - INFO - 課題 TEST_PRIBOT-14: 振り分け先 '2_診療費請求書兼領収書(控え付き)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ひまわりきょうごく_2_診療費請求書兼領収書(A4控え付き)'
+2025-08-22 14:42:50,769 - pribot - INFO - 課題 TEST_PRIBOT-15: 振り分け先 '4_診療費明細書' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\ひまわりきょうごく_4_診療費明細書'
+2025-08-22 14:42:50,769 - pribot - INFO - 課題 TEST_PRIBOT-16: 振り分け先 '8_薬袋シール(三宅村)' = 'C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\三宅村_8_薬袋シール'
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 西大宮整形外科くれクリニック, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: いたがき総合診療クリニック, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 そけん小児科, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人五一六五ナゴヤガーデンクリニック, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人妙泉会 阿南いしばし医院, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 三宅村国民健康保険直営中央診療所, 振り分け設定数: 4
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: 医療法人 吉松会 照葉浅部クリニック, 振り分け設定数: 1
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: メモリーケアクリニック湘南, 振り分け設定数: 3
+2025-08-22 14:42:50,769 - pribot - INFO - PriBot 監視対象の医療機関名: ひまわりクリニックきょうごく, 振り分け設定数: 2
+2025-08-22 14:42:50,769 - pribot - INFO - 監視対象の医療機関数: 9
+2025-08-22 14:42:50,770 - pribot - INFO - PriBot 監視フォルダ: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot監視フォルダ
+2025-08-22 14:42:50,771 - pribot - INFO - PriBot エラーフォルダ: C:\Users\monibot\Desktop\wk\PriBot\テスト\PriBot検証用\_PriBot振り分けエラー
+2025-08-22 14:42:50,771 - pribot - INFO - PriBot デバッグフォルダ: C:\Users\monibot\Desktop\wk\PriBot\pribot_debug
+2025-08-22 14:42:50,771 - pribot - INFO - PriBot 監視対象の医療機関数: 9
+2025-08-22 14:42:50,771 - pribot - INFO - デバッグファイルのクリーンアップを実行します
+2025-08-22 14:42:50,786 - pribot - INFO - 既存ファイルの処理を開始します
+2025-08-22 14:42:50,786 - pribot - INFO - 処理対象の既存ファイルはありませんでした
+2025-08-22 14:42:50,786 - pribot - INFO - 完全同期版ファイル監視を設定します（重複判定なし）
+2025-08-22 14:42:50,787 - pribot - INFO - 完全同期版ファイル監視を開始しました（重複判定なし）
+2025-08-22 14:43:50,789 - pribot - INFO - 監視継続中... (経過時間: 6分)
+2025-08-22 14:44:13,729 - pribot - INFO - 新しいPDFファイルを検出: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:13,729 - pribot - INFO - PDFファイルの処理を開始: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:13,925 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-08-22 14:44:13,929 - pribot - INFO - 抽出された医療機関名: いたがき総合診療クリニック
+2025-08-22 14:44:13,930 - pribot - INFO - [成功] マッチング成功: いたがき総合診療クリニック
+2025-08-22 14:44:13,930 - pribot - INFO - 振り分け先: いたがき総合診療クリニック -> .../PriBot検証用/いたがき総合診療クリニック (設定: 0_共通)
+2025-08-22 14:44:13,932 - pribot - INFO - 同名ファイル検出のためタイムスタンプ付与: いたがき総合診療クリニック診療費処方せん_20250822_144413.pdf
+2025-08-22 14:44:13,934 - pribot - INFO - [成功] ファイルを移動しました: いたがき総合診療クリニック診療費処方せん.pdf -> .../いたがき総合診療クリニック/いたがき総合診療クリニック診療費処方せん_20250822_144413.pdf
+2025-08-22 14:44:13,935 - pribot - INFO - PDFファイルの処理が完了しました: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:13,935 - pribot - INFO - 
+2025-08-22 14:44:50,792 - pribot - INFO - 監視継続中... (経過時間: 12分)
+2025-08-22 14:44:55,015 - pribot - INFO - 新しいPDFファイルを検出: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:55,015 - pribot - INFO - PDFファイルの処理を開始: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:55,083 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-08-22 14:44:55,084 - pribot - INFO - 抽出された医療機関名: いたがき総合診療クリニック
+2025-08-22 14:44:55,085 - pribot - INFO - [成功] マッチング成功: いたがき総合診療クリニック
+2025-08-22 14:44:55,085 - pribot - INFO - 振り分け先: いたがき総合診療クリニック -> .../PriBot検証用/いたがき総合診療クリニック (設定: 0_共通)
+2025-08-22 14:44:55,089 - pribot - INFO - [成功] ファイルを移動しました: いたがき総合診療クリニック診療費処方せん.pdf -> .../いたがき総合診療クリニック/いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:55,090 - pribot - INFO - PDFファイルの処理が完了しました: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:44:55,091 - pribot - INFO - 
+2025-08-22 14:45:50,796 - pribot - INFO - 監視継続中... (経過時間: 18分)
+2025-08-22 14:46:50,797 - pribot - INFO - 監視継続中... (経過時間: 24分)
+2025-08-22 14:46:55,678 - pribot - INFO - 新しいPDFファイルを検出: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:46:55,679 - pribot - INFO - PDFファイルの処理を開始: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:46:55,914 - pribot - INFO - フォーマット識別: 処方箋 (ID: 5)
+2025-08-22 14:46:55,920 - pribot - INFO - 抽出された医療機関名: いたがき総合診療クリニック
+2025-08-22 14:46:55,921 - pribot - INFO - [成功] マッチング成功: いたがき総合診療クリニック
+2025-08-22 14:46:55,921 - pribot - INFO - 振り分け先: いたがき総合診療クリニック -> .../PriBot検証用/いたがき総合診療クリニック (設定: 0_共通)
+2025-08-22 14:46:55,923 - pribot - INFO - 同名ファイル検出のためタイムスタンプ付与: いたがき総合診療クリニック診療費処方せん_20250822_144655.pdf
+2025-08-22 14:46:55,925 - pribot - INFO - [成功] ファイルを移動しました: いたがき総合診療クリニック診療費処方せん.pdf -> .../いたがき総合診療クリニック/いたがき総合診療クリニック診療費処方せん_20250822_144655.pdf
+2025-08-22 14:46:55,926 - pribot - INFO - PDFファイルの処理が完了しました: いたがき総合診療クリニック診療費処方せん.pdf
+2025-08-22 14:46:55,926 - pribot - INFO - 

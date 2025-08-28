@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250710_095126",
+  "original_file": "1752108669124&0&kbixu9ii&75d959b2-4ce1-47f7-821b-f24fe01d2c2d.pdf",
+  "debug_file": "20250710_095126_1752108669124&0&kbixu9ii&75d959b2-4ce1-47f7-821b-f24fe01d2c2d.pdf",
+  "error_reason": "医療機関マッチング失敗: メモリーケアクリニック湘南",
+  "file_size": 61279,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 1169817600,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 120464039936,
+      "free": 133208510464
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-07-10T09:51:26.596115"
+  }
+}

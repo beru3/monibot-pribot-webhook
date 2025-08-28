@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250617_120529",
+  "original_file": "1092.pdf",
+  "debug_file": "20250617_120529_1092.pdf",
+  "error_reason": "医療機関マッチング失敗: 御蔵島村国民健康保険直営御蔵島診療所",
+  "file_size": 74692,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 953491456,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 111040131072,
+      "free": 142632419328
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-06-17T12:05:29.463299"
+  }
+}

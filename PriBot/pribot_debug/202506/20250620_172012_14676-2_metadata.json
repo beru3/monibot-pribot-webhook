@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250620_172012",
+  "original_file": "14676-2.pdf",
+  "debug_file": "20250620_172012_14676-2.pdf",
+  "error_reason": "医療機関マッチング失敗: 様 保険種類 組合",
+  "file_size": 65467,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 1171566592,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 114387103744,
+      "free": 139285446656
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-06-20T17:20:12.514829"
+  }
+}

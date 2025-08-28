@@ -1,0 +1,21 @@
+{
+  "timestamp": "20250607_164854",
+  "original_file": "1749282522345&722140&c6yxy7gc&40111646-8453-4d32-815f-0b248db6994b.pdf",
+  "debug_file": "20250607_164854_1749282522345&722140&c6yxy7gc&40111646-8453-4d32-815f-0b248db6994b.pdf",
+  "error_reason": "フォーマット識別失敗",
+  "file_size": 80119,
+  "system_info": {
+    "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "available_memory": 1200119808,
+    "disk_usage": {
+      "total": 253672550400,
+      "used": 111604715520,
+      "free": 142067834880
+    }
+  },
+  "processing_info": {
+    "watch_dir": "C:\\Users\\miyake2106\\OASIS INNOAVTION Dropbox\\診療報酬請求事務集中センターOASIS INNOVATION\\pribot",
+    "error_time": "2025-06-07T16:48:54.528238"
+  }
+}
