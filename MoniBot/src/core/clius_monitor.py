@@ -598,55 +598,12 @@ async def extract_text(page, index, user_info):
         user_info['エラー'] = f"テキスト抽出中のエラー: {str(e)}"
         return None
 
-# async def extract_patient_data(page, index):
-#     """患者IDと診察終了時刻と診療科を抽出する"""
-#     try:
-#         # JavaScriptを使用してデータを抽出
-#         results = await page.evaluate("""
-#             () => {
-#                 const rows = Array.from(document.querySelectorAll('div[class*="nopaid ng-tns-c"]'))
-#                     .map(el => el.closest('div[class*="grid full-width"]'));
-                
-#                 return rows.map(row => {
-#                     const columns = row.querySelectorAll('.column.data');
-#                     if (columns.length > 13) {  // 14列目にアクセスできることを確認
-#                         const endTime = columns[1].innerText.trim();
-#                         const thirdText = columns[2].innerText.trim();
-#                         const fourthText = columns[3].innerText.trim();
-#                         const patientId = thirdText === '' ? fourthText : thirdText;
-                        
-#                         // 14列目(インデックス13)から診療科情報を取得
-#                         const deptText = columns[13] ? columns[13].innerText.trim() : '';
-#                         const department = deptText || '不明';
-                        
-#                         return { 
-#                             patient_id: patientId, 
-#                             department: department,  // 診療科を追加
-#                             end_time: endTime 
-#                         };
-#                     }
-#                     return null;
-#                 }).filter(item => item !== null);
-#             }
-#         """)
-        
-#         if not results:
-#             return None
-        
-#         return results
-    
-#     except Exception as e:
-#         logging.error(f"ユーザー {index + 1}: 患者IDと診察終了時刻と診療科の抽出中にエラーが発生しました: {str(e)}")
-#         return None
 
 async def extract_patient_data(page, index):
     """患者IDと診察終了時刻と診療科を抽出する"""
     try:
-        # JavaScriptを使用してデータを抽出
         results = await page.evaluate("""
             () => {
-                // まずヘッダー情報を取得して診療科の列インデックスを特定
-                // 2つ目のペインを特定してからヘッダーを検索
                 const headerSelector = 'app-splitter-pane:nth-child(2) app-list-header > div > div:nth-child(1)';
                 const headerElement = document.querySelector(headerSelector);
                 if (!headerElement) {
@@ -654,12 +611,10 @@ async def extract_patient_data(page, index):
                     return { error: 'ヘッダー要素が見つかりません' };
                 }
                 
-                // ヘッダーの列タイトルを取得
                 const headerColumns = headerElement.querySelectorAll('.column');
                 let departmentColumnIndex = -1;
                 const allHeaders = [];
                 
-                // 各列のタイトルをチェックして「診療科」の列を特定
                 headerColumns.forEach((col, index) => {
                     const text = col.textContent.trim();
                     allHeaders.push(text);
@@ -668,28 +623,23 @@ async def extract_patient_data(page, index):
                     }
                 });
                 
-                // 診療科の列が見つからない場合のフォールバック
-                if (departmentColumnIndex === -1) {
-                    console.warn('診療科の列が見つかりません。デフォルト値を使用します');
-                    departmentColumnIndex = 13;  // デフォルト値（現在の実装）
-                }
-                
-                // 患者データの抽出
                 const rows = Array.from(document.querySelectorAll('div[class*="nopaid ng-tns-c"]'))
                     .map(el => el.closest('div[class*="grid full-width"]'));
                 
                 const records = rows.map(row => {
                     const columns = row.querySelectorAll('.column.data');
-                    if (columns.length > Math.max(13, departmentColumnIndex)) {
+                    if (columns.length > 3) {
                         const endTime = columns[1].innerText.trim();
                         const thirdText = columns[2].innerText.trim();
                         const fourthText = columns[3].innerText.trim();
                         const patientId = thirdText === '' ? fourthText : thirdText;
                         
-                        // 診療科情報を動的に取得した列インデックスから取得
-                        const deptText = departmentColumnIndex < columns.length ? 
-                            columns[departmentColumnIndex].innerText.trim() : '';
-                        const department = deptText || '不明';
+                        // 診療科情報を動的に取得（診療科列がない場合は「不明」）
+                        let department = '不明';
+                        if (departmentColumnIndex >= 0 && departmentColumnIndex < columns.length) {
+                            const deptText = columns[departmentColumnIndex].innerText.trim();
+                            department = deptText || '不明';
+                        }
                         
                         return { 
                             patient_id: patientId, 
@@ -705,13 +655,13 @@ async def extract_patient_data(page, index):
                     debug: {
                         totalRows: rows.length,
                         departmentColumnIndex: departmentColumnIndex,
+                        allHeaders: allHeaders,
                         timestamp: new Date().toISOString()
                     }
                 };
             }
         """)
         
-        # エラーチェック
         if 'error' in results:
             logger.error(f"ユーザー {index + 1}: データ抽出エラー: {results['error']}")
             return []
@@ -721,6 +671,7 @@ async def extract_patient_data(page, index):
             logger.debug(f"ユーザー {index + 1}: "
                       f"全行数={debug_info.get('totalRows', 0)}, "
                       f"診療科列={debug_info.get('departmentColumnIndex', -1)}, "
+                      f"ヘッダー={debug_info.get('allHeaders', [])}, "
                       f"取得時刻={debug_info.get('timestamp')}")
 
         extracted_records = results.get('records', [])
@@ -734,9 +685,9 @@ async def extract_patient_data(page, index):
         
     except Exception as e:
         logger.error(f"ユーザー {index + 1}: 患者IDと診察終了時刻と診療科の抽出中にエラーが発生しました: {e}")
-        logger.error(traceback.format_exc())  # スタックトレースも出力
+        logger.error(traceback.format_exc())
         return []
-    
+
 async def periodic_extract_all(pages, interval, user_infos):
     '''定期的に全てのページから患者データを抽出し、medical_data_inserter.pyを呼び出してデータベースに挿入する'''
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -952,175 +903,6 @@ async def navigate_and_login(page, hospital_info, index, user_info, login_status
         user_info['エラー'] = error_msg
         logger.error(f"{hospital_info['hospital_name']}: {error_msg}")
         return False
-
-# async def run(playwright, config, shutdown_event, login_status):
-#     """メインの処理を実行する（非同期関数）"""
-#     def sanitize_directory_name(name: str) -> str:
-#         """ディレクトリ名として使用できない文字を除去する"""
-#         invalid_chars = '<>:"/\\|?*'
-#         for char in invalid_chars:
-#             name = name.replace(char, '_')
-#         return name
-
-#     contexts = []
-#     pages = []
-#     user_infos = []
-#     extract_task = None  # 初期化を追加
-#     extract_interval = int(config.get('setting', 'clius_polling_interval', fallback=10))
-
-#     try:
-#         # Backlogから医療機関情報を取得
-#         hospitals = get_hospital_info(config)
-#         if not hospitals:
-#             logger.error("医療機関情報を取得できませんでした")
-#             return
-
-#         # ログイン処理の開始を記録
-#         login_status.start_login_process(len(hospitals))
-
-#         # 一つずつログイン処理を実行
-#         for index, hospital in enumerate(hospitals):
-#             if shutdown_event.is_set():
-#                 break
-
-#             try:
-#                 # セッションディレクトリを課題キーベースで作成
-#                 system_type = sanitize_directory_name(hospital['system_type'])
-#                 issue_key = sanitize_directory_name(hospital['issue_key'])
-#                 user_data_dir = os.path.join(SESSION_DIR, f"{system_type}_{issue_key}")
-#                 os.makedirs(user_data_dir, exist_ok=True)
-
-#                 context = await playwright.chromium.launch_persistent_context(
-#                     user_data_dir,
-#                     headless=False,
-#                     viewport={'width': 1200, 'height': 1000},
-#                     args=[
-#                         '--no-first-run',
-#                         '--no-default-browser-check',
-#                         '--restore-last-session=false'
-#                     ]
-#                 )
-#                 contexts.append(context)
-
-#                 # 既存のページがある場合は最初のページを使用し、
-#                 # ない場合は新しいページを作成する
-#                 if context.pages:
-#                     page = context.pages[0]
-#                     # 2番目以降のページがあれば閉じる
-#                     for extra_page in context.pages[1:]:
-#                         await extra_page.close()
-#                 else:
-#                     page = await context.new_page()
-
-#                 pages.append(page)
-
-#                 user_info = {
-#                     'ユーザー': index + 1,
-#                     'セッション情報': user_data_dir,
-#                     '医療機関名': hospital['hospital_name'],
-#                     'システム種別': hospital['system_type'],
-#                     'グループ': hospital['team'],
-#                     'team': hospital['team'],
-#                     'login_info': hospital,
-#                     'issue_key': hospital['issue_key']
-#                 }
-#                 user_infos.append(user_info)
-
-#                 # ログイン処理を実行（リトライ機能付き）
-#                 max_retries = 3
-#                 retry_count = 0
-#                 login_success = False
-
-#                 while not login_success and retry_count < max_retries:
-#                     try:
-#                         login_success = await navigate_and_login(page, hospital, index, user_info, login_status)
-#                         if login_success:
-#                             await handle_post_login_actions(page, index, user_info, hospital)
-#                             await asyncio.sleep(2)  # 次の医療機関の処理前に少し待機
-#                             break
-#                         else:
-#                             retry_count += 1
-#                             if retry_count < max_retries:
-#                                 logger.info(f"{hospital['hospital_name']}: ログイン再試行 {retry_count}/{max_retries}")
-#                                 await asyncio.sleep(5)  # リトライ前の待機
-#                     except Exception as e:
-#                         retry_count += 1
-#                         logger.error(f"{hospital['hospital_name']}: ログイン試行 {retry_count} でエラー: {e}")
-#                         if retry_count < max_retries:
-#                             await asyncio.sleep(5)
-
-#             except Exception as e:
-#                 logger.error(f"ブラウザ {index + 1} の初期化中にエラー: {e}")
-#                 login_status.update_hospital_status(hospital['hospital_name'], False, str(e))
-#                 continue
-
-#         # 定期的なデータ抽出の実行
-#         if not shutdown_event.is_set() and hospitals:  # hospitalsが空でない場合のみ実行
-#             extract_task = asyncio.create_task(
-#                 periodic_extract_all(pages, extract_interval, user_infos)
-#             )
-
-#         # メインループ
-#         while not shutdown_event.is_set():
-#             try:
-#                 await asyncio.wait_for(shutdown_event.wait(), timeout=1.0)
-#             except asyncio.TimeoutError:
-#                 continue
-#             except Exception as e:
-#                 logger.error(f"メインループでエラー: {e}")
-#                 break
-
-#     except asyncio.CancelledError:
-#         logger.debug("実行がキャンセルされました")
-#     except Exception as e:
-#         logger.error(f"実行中にエラーが発生しました: {e}")
-#         logger.debug("スタックトレース:", exc_info=True)
-#     finally:
-#         if extract_task and not extract_task.done():
-#             extract_task.cancel()
-#             try:
-#                 await extract_task
-#             except asyncio.CancelledError:
-#                 pass
-
-#         # コンテキストの安全な終了
-#         for context in reversed(contexts):
-#             try:
-#                 if context:
-#                     await asyncio.shield(context.close())
-#             except Exception as e:
-#                 logger.debug(f"コンテキスト終了中の無視可能なエラー: {e}")
-        
-#         pages.clear()
-#         contexts.clear()
-
-# async def main_with_shutdown(shutdown_event, login_status):
-#     """シャットダウンイベントに対応したメイン関数"""
-#     try:
-#         logger.info("プログラムを開始します")
-#         config = load_config()
-#         if config is None:
-#             logger.error("設定の読み込みに失敗しました")
-#             return
-
-#         # 医療機関情報を取得
-#         hospitals = get_hospital_info(config)
-#         if not hospitals:
-#             logger.info("ポーリング対象の医療機関がないため、モニタリングをスキップします")
-#             # 医療機関数0として処理を完了
-#             login_status.start_login_process(0)
-#             # 完了のマークを付ける（医療機関数0なので追加の処理は不要）
-#             login_status.update_hospital_status("CLIUS", True)  # システム名だけ渡して成功を報告
-#             return
-
-#         async with async_playwright() as playwright:
-#             await run(playwright, config, shutdown_event, login_status)
-
-#     except asyncio.CancelledError:
-#         logger.debug("メイン処理がキャンセルされました")
-#     except Exception as e:
-#         logger.error(f"予期せぬエラーが発生しました: {e}")
-#         logger.debug("スタックトレース:", exc_info=True)
 
 async def run(playwright, config, shutdown_event, login_status, hospitals):
     """メインの処理を実行する（非同期関数）"""

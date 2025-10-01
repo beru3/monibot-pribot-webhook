@@ -336,34 +336,32 @@ def process_patient_data(connection, cursor, data):
             logger.error(f"病院データの取得または挿入に失敗しました: {hospital_name}")
             return
 
+        # 病院データをコミット
+        connection.commit()
+
         if not patients:
             logger.debug("処理対象の患者データが空です")
             return
 
-        config = load_config()[0]  # configを取得
+        config = load_config()[0]
         
         # 各患者データの処理をトランザクションで管理
         for patient in patients:
-            # 各患者ごとに個別トランザクションで管理
-            # 既存のトランザクションがあればまずロールバック
+            # 既存のトランザクションがあればロールバック
             if connection.in_transaction:
-                logger.debug(f"既存のトランザクションを検出したため、ロールバックします: 患者ID {patient.get('patient_id', 'Unknown')}")
                 connection.rollback()
             connection.start_transaction()
             
             try:
                 logger.debug(f"患者データを処理: {json.dumps(patient, ensure_ascii=False)}")
                 exam_date = datetime.now().strftime("%Y-%m-%d")
-                
-                # 診療科情報を取得、なければデフォルト値を設定
                 department = patient.get('department', '不明')
-                
-                # 再会計フラグの取得
                 re_account_flag = 1 if 're_account' in patient and patient['re_account'] else 0
                 
-                # InsertPendingAccountプロシージャを呼び出す（再会計フラグを渡す）
-                account_id, updated_existing = insert_pending_account(cursor, hospital_id, patient['patient_id'], 
-                                            department, exam_date, patient['end_time'], re_account_flag)
+                account_id, updated_existing = insert_pending_account(
+                    cursor, hospital_id, patient['patient_id'], 
+                    department, exam_date, patient['end_time'], re_account_flag
+                )
 
                 if account_id is None or account_id == 0:
                     logger.error(f"会計データの挿入に失敗しました: {patient['patient_id']}")
@@ -372,12 +370,11 @@ def process_patient_data(connection, cursor, data):
 
                 # 新規データの場合のみBacklogチケットを作成
                 if account_id > 0 and updated_existing == 0:
-                    logger.info(f"🔍 新規データを登録しました: 病院ID {hospital_id}, "
+                    logger.info(f"新規データを登録しました: 病院ID {hospital_id}, "
                               f"患者ID {patient['patient_id']}, 会計ID {account_id}, "
                               f"診療科 {department}, 診察終了時間 {patient['end_time']}, "
                               f"再会計フラグ: {re_account_flag}")
 
-                    # Backlogチケット作成
                     hospital_info = {
                         "病院名": hospital_name,
                         "電子カルテ名": system_type
@@ -391,20 +388,15 @@ def process_patient_data(connection, cursor, data):
                         "再会計フラグ": re_account_flag
                     }
                     
-                    # Backlogチケット作成
                     backlog_issue = create_initial_backlog_issue(connection, config, hospital_info, account_info)
                     
-                    # APIエラー時の処理
                     if backlog_issue is None:
                         logger.error(f"Backlogチケット作成に失敗したため、トランザクションをロールバックします: 患者ID {patient['patient_id']}")
                         connection.rollback()
                         continue
-                
-                # 既存データの場合はログ出力のみ
                 else:
                     logger.info(f"既存レコードが検出されました: 患者ID {patient['patient_id']}, 会計ID {account_id}")
                 
-                # すべての処理が成功したらコミット
                 connection.commit()
                 logger.debug(f"患者ID {patient['patient_id']} の処理が完了し、トランザクションをコミットしました")
                 
