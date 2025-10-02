@@ -1,67 +1,68 @@
 #!/usr/bin/env python3
+"""
+メインオーケストレーター
+各モニターシステムを統合管理する（順次ログイン処理版）
+- CLIUS監視
+- デジカル監視
+- モバカル監視
+- CLINICS監視
+- 医歩監視 (新規追加)
+- モバクリ監視 (新規追加)
+- 紙カルテ監視
+- タスク割り当て
+"""
+
 import os
 import sys
+import asyncio
+import signal
+import traceback
 import configparser
+from datetime import datetime, timedelta
+import glob
+import json
 
 # プロジェクトルートへのパスを追加
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(project_root)
 
-import asyncio
-import logging
-from datetime import datetime, timedelta
-from logging.handlers import TimedRotatingFileHandler
-import traceback
-import signal
-
-from src.utils.logger import LoggerFactory
-from src.core import task_assignment
-from src.core import clius_monitor
-from src.core import digikar_monitor
-from src.core import movacal_monitor
-from src.core import clinics_monitor
-from src.core import paper_monitor
+from src.utils.logger import get_logger
 from src.utils.login_status import LoginStatus
-
+from src.core import clius_monitor, digikar_monitor, movacal_monitor, clinics_monitor
+from src.core import ippo_monitor, movacli_monitor  # 新規追加
+from src.core import paper_monitor, task_assignment
 
 class ProcessOrchestrator:
     def __init__(self):
         self.setup_logging()
-        self.monitor_processes = []
+        self.logger.info("プロセスオーケストレーターを初期化しています...")
+        
+        # 実行状態管理
         self.running = True
         self.shutdown_event = asyncio.Event()
+        self.monitor_processes = []
         
-        # 各システムのログイン状態管理
+        # ログイン状態管理
         self.clius_login_status = LoginStatus("CLIUS")
         self.digikar_login_status = LoginStatus("デジカル")
         self.movacal_login_status = LoginStatus("モバカル")
         self.clinics_login_status = LoginStatus("CLINICS")
+        self.ippo_login_status = LoginStatus("医歩")  # 新規追加
+        self.movacli_login_status = LoginStatus("モバクリ")  # 新規追加
         
-        # PIDファイルのパスを設定と初期化
-        self.pid_file = os.path.join(project_root, "config", "pid.txt")
+        # PIDファイルパス
+        self.pid_file = os.path.join(project_root, 'config', 'pid.txt')
+        
+        # Bizrobo!連携用
+        self.create_bizrobo_summary_on_completion = True
+        self.bizrobo_flag_dir = os.path.join(project_root, "bizrobo_flags")
+        os.makedirs(self.bizrobo_flag_dir, exist_ok=True)
+        
+        # 設定ファイル読み込み
+        self.load_intervals_from_config()
+        
+        # PIDファイル初期化
         self.initialize_pid_file()
-        
-        # 設定ファイルを読み込む
-        config = configparser.ConfigParser()
-        config_path = os.path.join(project_root, "config", "config.ini")
-        config.read(config_path, encoding='utf-8')
-        
-        # タスク割り当て間隔を設定から読み込む（デフォルト値：30秒）
-        self.task_assignment_interval = config.getint('setting', 'task_assignment_interval', fallback=30)
-        self.logger.info(f"タスク割り当て間隔を {self.task_assignment_interval} 秒に設定しました")
-
-        # 各システムのポーリング間隔を設定から読み込む
-        self.clius_polling_interval = config.getint('setting', 'clius_polling_interval', fallback=30)
-        self.digikar_polling_interval = config.getint('setting', 'digikar_polling_interval', fallback=30)
-        self.movacal_polling_interval = config.getint('setting', 'movacal_polling_interval', fallback=30)
-        self.clinics_polling_interval = config.getint('setting', 'clinics_polling_interval', fallback=30)
-        self.paper_polling_interval = config.getint('setting', 'paper_polling_interval', fallback=30)
-        
-        self.logger.info(f"CLIUSポーリング間隔を {self.clius_polling_interval} 秒に設定しました")
-        self.logger.info(f"デジカルポーリング間隔を {self.digikar_polling_interval} 秒に設定しました")
-        self.logger.info(f"モバカルポーリング間隔を {self.movacal_polling_interval} 秒に設定しました")
-        self.logger.info(f"CLINICSポーリング間隔を {self.clinics_polling_interval} 秒に設定しました")
-        self.logger.info(f"紙カルテポーリング間隔を {self.paper_polling_interval} 秒に設定しました")
         
         # シグナルハンドラの設定
         for sig in (signal.SIGTERM, signal.SIGINT):
@@ -70,15 +71,12 @@ class ProcessOrchestrator:
     def initialize_pid_file(self):
         """PIDファイルの初期化"""
         try:
-            # configディレクトリが存在することを確認
             os.makedirs(os.path.dirname(self.pid_file), exist_ok=True)
             
-            # 既存のPIDファイルがあれば削除
             if os.path.exists(self.pid_file):
                 os.remove(self.pid_file)
                 self.logger.info(f"既存のPIDファイル {self.pid_file} を削除しました")
             
-            # 新しいPIDファイルを作成
             with open(self.pid_file, 'w') as f:
                 f.write(str(os.getpid()))
             self.logger.info(f"プロセスID {os.getpid()} を {self.pid_file} に保存しました")
@@ -93,16 +91,14 @@ class ProcessOrchestrator:
 
     def handle_shutdown(self, signum, frame):
         """シャットダウン処理"""
-        if not self.running:  # 既にシャットダウン中の場合は無視
+        if not self.running:
             return
             
         self.logger.info(f"シグナル {signal.Signals(signum).name} を受信しました")
         self.running = False
         
-        # PIDファイルを削除
         self.remove_pid_file()
         
-        # イベントループがある場合のみイベントをセット
         try:
             loop = asyncio.get_event_loop()
             if loop.is_running():
@@ -110,40 +106,125 @@ class ProcessOrchestrator:
         except Exception as e:
             self.logger.error(f"シャットダウンイベントの設定中にエラー: {e}")
 
-    async def cleanup(self):
-        """クリーンアップ処理"""
-        self.logger.info("クリーンアップを開始します")
-        
-        # モニタリングプロセスの停止
-        for process in self.monitor_processes:
-            if not process.done():
-                process.cancel()
-                try:
-                    await process
-                except asyncio.CancelledError:
-                    pass
-                except Exception as e:
-                    self.logger.error(f"プロセス終了中にエラー: {e}")
-        
-        self.monitor_processes.clear()
-        
-        # PIDファイルの削除
-        self.remove_pid_file()
-        
-        self.logger.info("クリーンアップが完了しました")
+    def remove_pid_file(self):
+        """PIDファイルを削除する"""
+        if os.path.exists(self.pid_file):
+            try:
+                os.remove(self.pid_file)
+                self.logger.info(f"PIDファイル {self.pid_file} を削除しました")
+            except Exception as e:
+                self.logger.error(f"PIDファイルの削除中にエラーが発生しました: {e}")
 
-    async def run_task_assignment(self):
-        """タスク割り当ての実行"""
+    def load_intervals_from_config(self):
+        """設定ファイルからポーリング間隔を読み込む"""
+        config = configparser.ConfigParser()
+        config_path = os.path.join(project_root, 'config', 'config.ini')
+        
+        if not os.path.exists(config_path):
+            self.logger.error("config.ini が見つかりません")
+            sys.exit(1)
+        
+        config.read(config_path, encoding='utf-8')
+        
+        self.task_assignment_interval = config.getint('setting', 'task_assignment_interval', fallback=5)
+        self.clius_polling_interval = config.getint('setting', 'clius_polling_interval', fallback=10)
+        self.digikar_polling_interval = config.getint('setting', 'digikar_polling_interval', fallback=10)
+        self.movacal_polling_interval = config.getint('setting', 'movacal_polling_interval', fallback=10)
+        self.clinics_polling_interval = config.getint('setting', 'clinics_polling_interval', fallback=10)
+        self.ippo_polling_interval = config.getint('setting', 'ippo_polling_interval', fallback=10)  # 新規追加
+        self.movacli_polling_interval = config.getint('setting', 'movacli_polling_interval', fallback=10)  # 新規追加
+        self.paper_polling_interval = config.getint('setting', 'paper_polling_interval', fallback=30)
+        
+        self.logger.info(f"CLIUSポーリング間隔を {self.clius_polling_interval} 秒に設定しました")
+        self.logger.info(f"デジカルポーリング間隔を {self.digikar_polling_interval} 秒に設定しました")
+        self.logger.info(f"モバカルポーリング間隔を {self.movacal_polling_interval} 秒に設定しました")
+        self.logger.info(f"CLINICSポーリング間隔を {self.clinics_polling_interval} 秒に設定しました")
+        self.logger.info(f"医歩ポーリング間隔を {self.ippo_polling_interval} 秒に設定しました")  # 新規追加
+        self.logger.info(f"モバクリポーリング間隔を {self.movacli_polling_interval} 秒に設定しました")  # 新規追加
+        self.logger.info(f"紙カルテポーリング間隔を {self.paper_polling_interval} 秒に設定しました")
+
+    def _create_all_systems_bizrobo_summary(self):
+        """個別ログインファイルから統合判定ファイルを作成"""
         try:
-            await asyncio.get_event_loop().run_in_executor(None, task_assignment.main)
-            self.logger.debug("タスク割り当て処理が完了しました")
+            login_files = glob.glob(os.path.join(self.bizrobo_flag_dir, "*_login_status.json"))
+            
+            if not login_files:
+                self.logger.warning("ログインステータスファイルが見つかりません")
+                return
+            
+            total_files = len(login_files)
+            failed_hospitals = []
+            failed_systems = set()
+            restart_needed = False
+            
+            for file_path in login_files:
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    if not data.get('login_success', False):
+                        hospital_name = data.get('hospital_name', 'Unknown')
+                        system_type = data.get('system_type', 'Unknown')
+                        failed_hospitals.append({
+                            'hospital': hospital_name,
+                            'system': system_type,
+                            'error': data.get('error_message', '不明なエラー')
+                        })
+                        failed_systems.add(system_type)
+                        restart_needed = True
+                        
+                except Exception as e:
+                    self.logger.error(f"ファイル読み込みエラー: {file_path} - {e}")
+            
+            summary_data = {
+                'check_time': datetime.now().isoformat(),
+                'total_login_files': total_files,
+                'failed_hospitals_count': len(failed_hospitals),
+                'failed_hospitals': failed_hospitals,
+                'failed_systems': list(failed_systems),
+                'overall_status': 'ERROR' if restart_needed else 'OK',
+                'restart_needed': restart_needed,
+                'restart_command': 'python main_orchestrator.py'
+            }
+            
+            summary_path = os.path.join(self.bizrobo_flag_dir, "all_systems_summary.json")
+            with open(summary_path, 'w', encoding='utf-8') as f:
+                json.dump(summary_data, f, indent=2, ensure_ascii=False)
+            
+            self.logger.info(f"統合判定ファイルを作成しました: {summary_path}")
+            self.logger.info(f"全体ステータス: {summary_data['overall_status']}")
+            self.logger.info(f"再起動必要: {restart_needed}")
+            
         except Exception as e:
-            self.logger.error(f"タスク割り当て処理でエラーが発生しました: {str(e)}")
-            self.logger.error(traceback.format_exc())
-            raise
+            self.logger.error(f"統合判定ファイル作成エラー: {e}")
+            self.logger.debug(traceback.format_exc())
+
+    def _create_error_bizrobo_summary(self, error_message: str):
+        """エラー発生時の統合判定ファイル作成"""
+        try:
+            summary_data = {
+                'check_time': datetime.now().isoformat(),
+                'total_login_files': 0,
+                'failed_hospitals_count': 0,
+                'failed_hospitals': [],
+                'failed_systems': [],
+                'overall_status': 'CRITICAL_ERROR',
+                'restart_needed': True,
+                'restart_command': 'python main_orchestrator.py',
+                'error_message': error_message
+            }
+            
+            summary_path = os.path.join(self.bizrobo_flag_dir, "all_systems_summary.json")
+            with open(summary_path, 'w', encoding='utf-8') as f:
+                json.dump(summary_data, f, indent=2, ensure_ascii=False)
+            
+            self.logger.error(f"エラー用統合判定ファイルを作成しました: {summary_path}")
+            
+        except Exception as e:
+            self.logger.error(f"エラー用統合判定ファイル作成失敗: {e}")
 
     async def run_clius_monitor(self):
-        """CLIUSモニタリングの実行"""
+        """CLIUS監視の起動"""
         try:
             self.logger.debug("CLIUSモニタリングを開始します")
             task = asyncio.create_task(
@@ -166,7 +247,7 @@ class ProcessOrchestrator:
             raise
 
     async def run_digikar_monitor(self):
-        """デジカルモニタリングの実行"""
+        """デジカル監視の起動"""
         try:
             self.logger.debug("デジカルモニタリングを開始します")
             task = asyncio.create_task(
@@ -189,7 +270,7 @@ class ProcessOrchestrator:
             raise
 
     async def run_movacal_monitor(self):
-        """モバカルモニタリングの実行"""
+        """モバカル監視の起動"""
         try:
             self.logger.debug("モバカルモニタリングを開始します")
             task = asyncio.create_task(
@@ -212,71 +293,78 @@ class ProcessOrchestrator:
             raise
 
     async def run_clinics_monitor(self):
-            """CLINICSモニタリングの実行"""
-            try:
-                self.logger.debug("CLINICSモニタリングを開始します")
-                task = asyncio.create_task(
-                    clinics_monitor.main_with_shutdown(self.shutdown_event, self.clinics_login_status)
-                )
-                self.monitor_processes.append(task)
-                
-                # ログイン完了を待機（最大10分）
-                self.logger.info("CLINICS: ログイン完了を待機中...")
-                if await self.clinics_login_status.wait_for_completion(timeout=600):
-                    self.logger.info(self.clinics_login_status.get_login_summary())
-                else:
-                    self.logger.error("CLINICS: ログイン処理がタイムアウトしました")
-                    raise TimeoutError("CLINICSログイン処理がタイムアウトしました")
-                
-                self.logger.debug("CLINICSのモニタリングが開始されました")
-            except Exception as e:
-                self.logger.error(f"CLINICSモニタリングの起動でエラーが発生しました: {str(e)}")
-                self.logger.error(traceback.format_exc())
-                raise
+        """CLINICS監視の起動"""
+        try:
+            self.logger.debug("CLINICSモニタリングを開始します")
+            task = asyncio.create_task(
+                clinics_monitor.main_with_shutdown(self.shutdown_event, self.clinics_login_status)
+            )
+            self.monitor_processes.append(task)
+            
+            # ログイン完了を待機（最大10分）
+            self.logger.info("CLINICS: ログイン完了を待機中...")
+            if await self.clinics_login_status.wait_for_completion(timeout=600):
+                self.logger.info(self.clinics_login_status.get_login_summary())
+            else:
+                self.logger.error("CLINICS: ログイン処理がタイムアウトしました")
+                raise TimeoutError("CLINICSログイン処理がタイムアウトしました")
+            
+            self.logger.debug("CLINICSのモニタリングが開始されました")
+        except Exception as e:
+            self.logger.error(f"CLINICSモニタリングの起動でエラーが発生しました: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            raise
 
-    # async def run_paper_monitor(self):
-    #     """紙カルテモニタリングの実行（ログイン不要）"""
-    #     try:
-    #         self.logger.debug("紙カルテモニタリングを開始します")
-    #         task = asyncio.create_task(
-    #             paper_monitor.main_with_shutdown(self.shutdown_event)
-    #         )
-    #         self.monitor_processes.append(task)
-    #         self.logger.debug("紙カルテのモニタリングが開始されました")
+    async def run_ippo_monitor(self):
+        """医歩監視の起動（新規追加）"""
+        try:
+            self.logger.debug("医歩モニタリングを開始します")
+            task = asyncio.create_task(
+                ippo_monitor.main_with_shutdown(self.shutdown_event, self.ippo_login_status)
+            )
+            self.monitor_processes.append(task)
             
-    #     except Exception as e:
-    #         self.logger.error(f"紙カルテモニタリングの起動でエラーが発生しました: {str(e)}")
-    #         self.logger.error(traceback.format_exc())
-    #         raise
-    
-    # async def run_paper_monitor(self):
-    #     """紙カルテモニタリングの実行"""
-    #     try:
-    #         self.logger.debug("紙カルテモニタリングを開始します")
-    #         task = asyncio.create_task(
-    #             paper_monitor.main_with_shutdown(self.shutdown_event)
-    #         )
-    #         self.monitor_processes.append(task)
+            # ログイン完了を待機（最大10分）
+            self.logger.info("医歩: ログイン完了を待機中...")
+            if await self.ippo_login_status.wait_for_completion(timeout=600):
+                self.logger.info(self.ippo_login_status.get_login_summary())
+            else:
+                self.logger.error("医歩: ログイン処理がタイムアウトしました")
+                raise TimeoutError("医歩ログイン処理がタイムアウトしました")
             
-    #         # 初期化完了を待機
-    #         try:
-    #             # 初期化が完了するまで待機（最大5分）
-    #             await asyncio.wait_for(task, timeout=300)
-    #             self.logger.debug("紙カルテの初期化が完了しました")
-    #         except asyncio.TimeoutError:
-    #             self.logger.error("紙カルテ: 初期化処理がタイムアウトしました")
-    #             raise TimeoutError("紙カルテ初期化処理がタイムアウトしました")
+            self.logger.debug("医歩のモニタリングが開始されました")
+        except Exception as e:
+            self.logger.error(f"医歩モニタリングの起動でエラーが発生しました: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            raise
+
+    async def run_movacli_monitor(self):
+        """モバクリ監視の起動（新規追加）"""
+        try:
+            self.logger.debug("モバクリモニタリングを開始します")
+            task = asyncio.create_task(
+                movacli_monitor.main_with_shutdown(self.shutdown_event, self.movacli_login_status)
+            )
+            self.monitor_processes.append(task)
             
-    #     except Exception as e:
-    #         self.logger.error(f"紙カルテモニタリングの起動でエラーが発生しました: {str(e)}")
-    #         self.logger.error(traceback.format_exc())
-    #         raise
+            # ログイン完了を待機（最大10分）
+            self.logger.info("モバクリ: ログイン完了を待機中...")
+            if await self.movacli_login_status.wait_for_completion(timeout=600):
+                self.logger.info(self.movacli_login_status.get_login_summary())
+            else:
+                self.logger.error("モバクリ: ログイン処理がタイムアウトしました")
+                raise TimeoutError("モバクリログイン処理がタイムアウトしました")
+            
+            self.logger.debug("モバクリのモニタリングが開始されました")
+        except Exception as e:
+            self.logger.error(f"モバクリモニタリングの起動でエラーが発生しました: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            raise
 
     async def run_paper_monitor(self):
         """紙カルテモニタリングの実行（ログイン不要）"""
         try:
             self.logger.debug("紙カルテモニタリングを開始します")
-            # 初期化完了を待機
             init_done = asyncio.Event()
             task = asyncio.create_task(
                 paper_monitor.main_with_shutdown(self.shutdown_event, init_done)
@@ -284,7 +372,6 @@ class ProcessOrchestrator:
             self.monitor_processes.append(task)
 
             try:
-                # 初期化完了を待機（最大5分）
                 await asyncio.wait_for(init_done.wait(), timeout=300)
                 self.logger.debug("紙カルテモニタリングの初期化が完了しました")
             except asyncio.TimeoutError:
@@ -296,8 +383,18 @@ class ProcessOrchestrator:
             self.logger.error(traceback.format_exc())
             raise
 
+    async def run_task_assignment(self):
+        """タスク割り当ての実行"""
+        try:
+            await asyncio.get_event_loop().run_in_executor(None, task_assignment.main)
+            self.logger.debug("タスク割り当て処理が完了しました")
+        except Exception as e:
+            self.logger.error(f"タスク割り当て処理でエラーが発生しました: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            raise
+
     async def orchestrate(self):
-        """メインの実行フロー"""
+        """メインの実行フロー（順次ログイン処理）"""
         self.logger.debug("オーケストレーターを開始します")
         last_task_assignment = None
         last_paper_monitor = None
@@ -325,26 +422,35 @@ class ProcessOrchestrator:
                         await self.run_clinics_monitor()
                         self.logger.debug("CLINICSモニタリングの初期化が完了しました")
 
-                        # # 紙カルテモニタリング開始
+                        # 医歩モニタリング開始（新規追加）
+                        await self.run_ippo_monitor()
+                        self.logger.debug("医歩モニタリングの初期化が完了しました")
+
+                        # モバクリモニタリング開始（新規追加）
+                        await self.run_movacli_monitor()
+                        self.logger.debug("モバクリモニタリングの初期化が完了しました")
+
+                        # 紙カルテモニタリング開始
                         await self.run_paper_monitor()
                         self.logger.debug("紙カルテモニタリングの初期化が完了しました")
 
+                        # 全システムログイン完了後、統合サマリー作成
+                        if self.create_bizrobo_summary_on_completion:
+                            self.logger.info("全システムのログイン処理が完了しました。統合判定ファイルを作成します。")
+                            self._create_all_systems_bizrobo_summary()
+                            self.create_bizrobo_summary_on_completion = False
 
                     # タスク割り当て処理の実行（設定された間隔ごと）
                     if last_task_assignment is None or (current_time - last_task_assignment).total_seconds() >= self.task_assignment_interval:
-                        # self.logger.info("タスクの割り当て処理を開始します")
                         await self.run_task_assignment()
                         last_task_assignment = current_time
                         next_run = current_time + timedelta(seconds=self.task_assignment_interval)
-                        self.logger.info(f"次回のタスク割り当て時刻: {next_run.strftime('%H:%M:%S')}")
 
                     # 紙カルテモニタリング処理の実行（設定された間隔ごと）
                     if last_paper_monitor is None or (current_time - last_paper_monitor).total_seconds() >= self.paper_polling_interval:
-                        # self.logger.info("紙カルテのファイル監視を開始します")
                         await self.run_paper_monitor()
                         last_paper_monitor = current_time
                         next_paper_run = current_time + timedelta(seconds=self.paper_polling_interval)
-                        # self.logger.info(f"次回の紙カルテ監視時刻: {next_paper_run.strftime('%H:%M:%S')}")
 
                     # 短い間隔でシャットダウンチェック
                     if await asyncio.wait_for(self.shutdown_event.wait(), timeout=1):
@@ -363,10 +469,38 @@ class ProcessOrchestrator:
                     last_paper_monitor = None
                     await asyncio.sleep(5)
         
+        except Exception as e:
+            self.logger.error(f"オーケストレーション処理中にエラーが発生しました: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            self._create_error_bizrobo_summary(str(e))
+            raise
+        
         finally:
             await self.cleanup()
             self.logger.info("オーケストレーターを終了します")
-            
+
+    async def cleanup(self):
+        """クリーンアップ処理"""
+        self.logger.info("クリーンアップを開始します")
+        
+        # モニタリングプロセスの停止
+        for process in self.monitor_processes:
+            if not process.done():
+                process.cancel()
+                try:
+                    await process
+                except asyncio.CancelledError:
+                    pass
+                except Exception as e:
+                    self.logger.error(f"プロセス終了中にエラー: {e}")
+        
+        self.monitor_processes.clear()
+        
+        # PIDファイルの削除
+        self.remove_pid_file()
+        
+        self.logger.info("クリーンアップが完了しました")
+
 async def main():
     """エントリーポイント"""
     orchestrator = ProcessOrchestrator()
