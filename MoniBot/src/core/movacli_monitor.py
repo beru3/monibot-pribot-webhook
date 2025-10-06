@@ -201,6 +201,16 @@ async def login_with_retry(page, hospital, max_retries=3):
             current_url = page.url
             if 'home' in current_url:
                 logger.info(f"{hospital['hospital_name']}: ログイン成功")
+                
+                # プルダウンを「全日」に変更
+                try:
+                    await asyncio.sleep(2)  # ページの読み込みを待つ
+                    await page.select_option('select#outer-home-recept-list-period', value='')
+                    logger.info(f"{hospital['hospital_name']}: 時間帯を「全日」に設定しました")
+                    await asyncio.sleep(1)  # 設定の反映を待つ
+                except Exception as e:
+                    logger.warning(f"{hospital['hospital_name']}: プルダウン選択エラー（処理は継続）: {e}")
+                
                 return True
             else:
                 logger.warning(f"{hospital['hospital_name']}: ログイン失敗（試行 {attempt + 1}）")
