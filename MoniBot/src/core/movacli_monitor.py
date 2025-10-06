@@ -444,19 +444,31 @@ async def run(playwright, config, shutdown_event, login_status, hospitals):
 
 async def main_with_shutdown(shutdown_event, login_status):
     """シャットダウンイベント対応のメイン関数"""
-    config = load_config()
-    if not config:
-        logger.error("設定ファイルの読み込みに失敗しました")
-        return
-    
-    # Backlogから医療機関情報を取得
-    hospitals = get_hospital_info(config)
-    if not hospitals:
-        logger.warning("モバクリ対象の医療機関が見つかりません")
-        return
-    
-    async with async_playwright() as playwright:
-        await run(playwright, config, shutdown_event, login_status, hospitals)
+    try:
+        logger.info("プログラムを開始します")
+        config = load_config()
+        if config is None:
+            logger.error("設定の読み込みに失敗しました")
+            return
+
+        # 医療機関情報を取得
+        hospitals = get_hospital_info(config)
+        if not hospitals:
+            logger.info("ポーリング対象の医療機関がないため、モニタリングをスキップします")
+            # ログイン状態を完了に設定（医療機関数0として）
+            login_status.start_login_process(0)
+            # 完了のマークを付ける
+            login_status.update_hospital_status("モバクリ", True)
+            return
+
+        async with async_playwright() as playwright:
+            await run(playwright, config, shutdown_event, login_status, hospitals)
+
+    except asyncio.CancelledError:
+        logger.debug("メイン処理がキャンセルされました")
+    except Exception as e:
+        logger.error(f"予期せぬエラーが発生しました: {e}")
+        logger.debug("スタックトレース:", exc_info=True)
 
 if __name__ == '__main__':
     # テスト実行用
