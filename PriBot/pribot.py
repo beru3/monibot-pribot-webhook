@@ -215,11 +215,12 @@ FORMAT_DEFINITIONS = [
     {'id': 1, 'name': '診療費請求書兼領収書(縦)', 'page': 1, 'line': 1, 'pattern': '診療費請求書兼領収書\n診療日', 'use_rect': True, 'x0': 0, 'y0': 440, 'x1': 400, 'y1': 460},
     {'id': 2, 'name': '診療費請求書兼領収書(控え付き)', 'page': 1, 'line': 1, 'pattern': '診療費請求書兼領収書\nNo.', 'use_rect': True, 'x0': 45, 'y0': 375, 'x1': 155, 'y1': 395},
     {'id': 3, 'name': '診療費請求書兼領収書(横)', 'page': 1, 'line': 1, 'pattern': '診療費請求書兼領収書\n患者番号', 'use_rect': True, 'x0': 300, 'y0': 140, 'x1': 530, 'y1': 150},
-    {'id': 4, 'name': '診療費明細書', 'page': 1, 'line': 1, 'pattern': '診療費明細書', 'use_rect': True, 'x0': 200, 'y0': 80, 'x1': 560, 'y1': 90},
+    {'id': 4, 'name': '診療費明細書(タイプA)', 'page': 1, 'line': 1, 'pattern': '診療費明細書\nNo.', 'use_rect': True, 'x0': 200, 'y0': 80, 'x1': 560, 'y1': 90},
     {'id': 5, 'name': '処方箋', 'page': 1, 'line': 1, 'pattern': '処 方 箋', 'use_rect': True, 'x0': 260, 'y0': 90, 'x1': 420, 'y1': 100},
     {'id': 6, 'name': 'お薬手帳', 'page': 1, 'line': 2, 'pattern': '_処__方__日__', 'use_rect': False, "clinic_name_line": -2},
     {'id': 7, 'name': 'お薬情報', 'page': 1, 'line': 1, 'pattern': 'お薬情報（', 'use_rect': True, 'x0': 0, 'y0': 800, 'x1': 300, 'y1': 820},
-    {'id': 8, 'name': '薬袋シール(三宅村)', 'page': 1, 'line': 1, 'pattern': '＊＊＊＊ 用法 ＊＊＊＊', 'use_rect': False, 'clinic_name_line': None, 'hardcoded_hospital': '三宅村'}
+    {'id': 8, 'name': '薬袋シール(三宅村)', 'page': 1, 'line': 1, 'pattern': '＊＊＊＊ 用法 ＊＊＊＊', 'use_rect': False, 'clinic_name_line': None, 'hardcoded_hospital': '三宅村'},
+    {'id': 9, 'name': '診療費明細書(タイプB)', 'page': 1, 'line': 1, 'pattern': '診療費明細書\n1 頁', 'use_rect': True, 'x0': 83, 'y0': 784, 'x1': 242, 'y1': 795}
 ]
 
 def get_custom_field_value(custom_fields, name):
@@ -410,8 +411,16 @@ def identify_pdf_format(pdf_path):
                 text = page.extract_text()
 
                 if text:
-                    for format_def in FORMAT_DEFINITIONS:
-                        if format_def['pattern'] in text[:100]:
+                    # パターンの長さでソート（長い方が具体的なので優先）
+                    sorted_formats = sorted(FORMAT_DEFINITIONS,
+                                          key=lambda f: len(f['pattern']),
+                                          reverse=True)
+
+                    for format_def in sorted_formats:
+                        # エスケープされた改行を実際の改行に変換
+                        pattern = format_def['pattern'].replace('\\n', '\n')
+
+                        if pattern in text[:100]:
                             logger.info(f"フォーマット識別: {format_def['name']} (ID: {format_def['id']})")
 
                             if 'hardcoded_hospital' in format_def:
@@ -438,9 +447,11 @@ def identify_pdf_format(pdf_path):
                                     if len(lines) >= abs(format_def['clinic_name_line']):
                                         clinic_name = lines[format_def['clinic_name_line']]
                             
-                            if format_def['id'] == 7:
-                                clinic_name = clinic_name.replace(" ", "")
-                                logger.info(f"半角スペースを削除した医療機関名: {clinic_name}")
+                            # ID7とID9の場合、スペースを削除
+                            if format_def['id'] == 7 or format_def['id'] == 9:
+                                clinic_name_original = clinic_name
+                                clinic_name = clinic_name.replace(" ", "").replace("　", "")
+                                logger.info(f"スペースを削除した医療機関名: '{clinic_name_original}' -> '{clinic_name}'")
                             
                             logger.info(f"抽出された医療機関名: {clinic_name}")
                             
@@ -469,24 +480,36 @@ def find_matching_hospital(pdf_info, hospital_list):
         format_id = pdf_info['format_id']
         format_name = pdf_info['format_name']
         clinic_name = pdf_info['clinic_name']
-        
+
         format_key = f"{format_id}_{format_name}"
-        
+
+        logger.info(f"マッチング開始 - PDFから抽出: '{clinic_name}'")
+
         for hospital in hospital_list:
             hospital_name = hospital['hospital_name']
-            
+
+            logger.debug(f"  比較中: Backlog医療機関名='{hospital_name}'")
+
             is_match = False
-            
+
             if format_id == 8 and clinic_name == '三宅村':
                 is_match = clinic_name in hospital_name
                 if is_match:
                     logger.info(f"三宅村薬袋の特別マッチング: '{clinic_name}' が '{hospital_name}' に含まれています")
             else:
-                is_match = hospital_name in clinic_name
+                # スペースを除去して比較
+                clinic_name_clean = clinic_name.replace(' ', '').replace('　', '')
+                hospital_name_clean = hospital_name.replace(' ', '').replace('　', '')
+
+                is_match = hospital_name_clean in clinic_name_clean
+
+                logger.debug(f"    PDF(スペース除去): '{clinic_name_clean}'")
+                logger.debug(f"    Backlog(スペース除去): '{hospital_name_clean}'")
+                logger.debug(f"    マッチ結果: {is_match}")
             
             if is_match:
-                logger.info(f"マッチング成功: {hospital_name}")
-                
+                logger.info(f"マッチング成功: Backlog医療機関名='{hospital_name}' <-> PDF抽出名='{clinic_name}'")
+
                 dist_settings = hospital['distribution_settings']
                 
                 if format_key in dist_settings:
@@ -506,6 +529,9 @@ def find_matching_hospital(pdf_info, hospital_list):
                     return None
         
         logger.warning(f"PDFのクリニック名 '{clinic_name}' にマッチする医療機関が見つかりませんでした")
+        logger.warning(f"登録されているBacklog医療機関一覧:")
+        for hospital in hospital_list:
+            logger.warning(f"  - '{hospital['hospital_name']}'")
         return None
     
     except Exception as e:
