@@ -350,85 +350,299 @@ async def navigate_and_login(page, hospital_info, index, user_info, login_status
         logger.error(f"{hospital_info['hospital_name']}: {error_msg}")
         return False
         
+# async def extract_patient_data(page, user_info):
+#     """XPathベースの患者データ抽出（hospitalName削除版）"""
+#     try:
+#         logger.debug(f"{user_info['hospital_name']}: XPathベースデータ抽出を開始します")
+        
+#         results = await page.evaluate("""
+#             () => {
+#                 const records = [];
+                
+#                 try {
+#                     // XPathで会計待ちの行を検索
+#                     const accountWaitingXPath = "//td[contains(text(), '会計待') or contains(text(), '再計待')]/parent::tr";
+#                     const result = document.evaluate(accountWaitingXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                    
+#                     console.log('XPathで検出した会計待ち行数:', result.snapshotLength);
+                    
+#                     // 各対象行からデータを抽出
+#                     for (let i = 0; i < result.snapshotLength; i++) {
+#                         try {
+#                             const row = result.snapshotItem(i);
+#                             const cells = Array.from(row.querySelectorAll('td'));
+                            
+#                             if (cells.length < 4) continue; // 最低限の列数チェック
+                            
+#                             let patientId = '';
+#                             let timeValue = '';
+#                             let department = '不明';
+#                             let isReAccount = false;
+                            
+#                             // 再会計フラグの確認（行全体のテキストから）
+#                             const rowText = row.textContent;
+#                             isReAccount = rowText.includes('再計待');
+                            
+#                             // 各セルを分析してデータを抽出
+#                             cells.forEach((cell, cellIndex) => {
+#                                 const text = cell.textContent.trim();
+                                
+#                                 // 患者番号の特定（3-4桁の数字）
+#                                 if (!patientId) {
+#                                     // セル内のリンクをチェック
+#                                     const link = cell.querySelector('a');
+#                                     if (link) {
+#                                         const linkText = link.textContent.trim();
+#                                         if (/^\\d{1,4}$/.test(linkText)) {
+#                                             patientId = linkText;
+#                                             return;
+#                                         }
+#                                     }
+#                                     // セル自体のテキストをチェック
+#                                     if (/^\\d{1,4}$/.test(text)) {
+#                                         patientId = text;
+#                                         return;
+#                                     }
+#                                 }
+                                
+#                                 // 時間の特定（HH:MM形式）
+#                                 if (!timeValue && /^\\d{1,2}:\\d{2}$/.test(text)) {
+#                                     timeValue = text;
+#                                     return;
+#                                 }
+                                
+#                                 // 診療科の特定
+#                                 if (text && !department || department === '不明') {
+#                                     // 診療科のキーワードを含むかチェック
+#                                     if (text.includes('科') || text.includes('診療') || text.includes('外来') || 
+#                                         text.includes('カウンセリング') || text.includes('訪問')) {
+#                                         // 編集ボタンなどのテキストを除去
+#                                         let cleanText = text.replace(/編集$/, '').trim();
+#                                         cleanText = cleanText.replace(/\\s+/g, ' '); // 複数の空白を1つに
+                                        
+#                                         if (cleanText && cleanText !== '編集' && cleanText.length > 1) {
+#                                             department = cleanText;
+#                                             return;
+#                                         }
+#                                     }
+#                                 }
+#                             });
+                            
+#                             // 必要なデータが揃っているかチェック
+#                             if (patientId && timeValue) {
+#                                 const record = {
+#                                     patient_id: patientId,
+#                                     department: department,
+#                                     end_time: timeValue,
+#                                     re_account: isReAccount
+#                                 };
+                                
+#                                 records.push(record);
+#                                 console.log('抽出成功:', JSON.stringify(record));
+#                             } else {
+#                                 console.log('データ不足:', {
+#                                     patientId: patientId || 'なし',
+#                                     timeValue: timeValue || 'なし',
+#                                     department,
+#                                     cellCount: cells.length
+#                                 });
+#                             }
+                            
+#                         } catch (rowError) {
+#                             console.error('行処理エラー:', rowError);
+#                         }
+#                     }
+                    
+#                     return {
+#                         records: records,
+#                         debug: {
+#                             extractedCount: records.length,
+#                             method: 'XPath',
+#                             accountWaitingRows: result.snapshotLength
+#                         },
+#                         pageTitle: document.title,
+#                         url: window.location.href,
+#                         timestamp: new Date().toISOString()
+#                         // hospitalName ← 削除
+#                     };
+                    
+#                 } catch (error) {
+#                     console.error('データ抽出エラー:', error);
+#                     return {
+#                         error: error.message,
+#                         records: [],
+#                         debug: { method: 'error' },
+#                         analysis_method: error.message ? 'XPath_or_Fallback' : 'no_data',
+#                         timestamp: new Date().toISOString()
+#                         // hospitalName ← 削除
+#                     }
+#                 };
+#             }
+#         """)
+        
+#         debug_info = results.get('debug', {})
+#         extracted_records = results.get('records', [])
+        
+#         logger.debug(f"{user_info['hospital_name']}: "
+#                    f"抽出件数={debug_info.get('extractedCount', 0)}, "
+#                    f"方式={debug_info.get('method', 'unknown')}")
+        
+#         if extracted_records:
+#             logger.info(f"{user_info['hospital_name']}: {len(extracted_records)}件のデータを抽出しました")
+#             for record in extracted_records:
+#                 re_account_text = "【再会計】" if record.get('re_account', False) else ""
+#                 logger.info(f"抽出データ: {re_account_text}ID={record['patient_id']}, " +
+#                           f"診療科={record['department']}, 時間={record['end_time']}")
+#         else:
+#             logger.info(f"{user_info['hospital_name']}: 抽出対象データはありませんでした")
+            
+#         return extracted_records
+        
+#     except Exception as e:
+#         logger.error(f"{user_info['hospital_name']}: データ抽出中にエラー: {e}")
+#         logger.error(traceback.format_exc())
+#         return []
+
 async def extract_patient_data(page, user_info):
-    """XPathベースの患者データ抽出（患者ID修正版）"""
+    """列名ベースの患者データ抽出（完全版）"""
     try:
-        logger.debug(f"{user_info['hospital_name']}: XPathベースデータ抽出を開始します")
+        logger.debug(f"{user_info['hospital_name']}: 列名ベースデータ抽出を開始します")
         
         results = await page.evaluate("""
             () => {
                 const records = [];
                 
                 try {
-                    // より堅牢なXPathで会計待ちの行を検索
-                    // CSSクラスに依存せず、テキスト内容で判定
-                    const accountWaitingXPath = "//*[contains(text(), '会計待') or contains(text(), '再計待')]/ancestor::tr[1]";
-                    const result = document.evaluate(accountWaitingXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                    // ヘッダー行から列インデックスのマッピングを作成
+                    const headerRow = document.querySelector('thead tr');
+                    if (!headerRow) {
+                        console.error('ヘッダー行が見つかりません');
+                        return {
+                            error: 'ヘッダー行が見つかりません',
+                            records: [],
+                            debug: { method: 'error' }
+                        };
+                    }
                     
-                    console.log('修正XPathで検出した会計待ち行数:', result.snapshotLength);
+                    const headers = Array.from(headerRow.querySelectorAll('th'));
+                    const columnMap = {};
+                    headers.forEach((th, index) => {
+                        const columnName = th.textContent.trim();
+                        columnMap[columnName] = index;
+                    });
                     
-                    // 各対象行からデータを抽出
-                    for (let i = 0; i < result.snapshotLength; i++) {
+                    console.log('列マッピング:', columnMap);
+                    
+                    // 必要な列のインデックスを取得
+                    const statusIndex = columnMap['ステータス'];
+                    const timeIndex = columnMap['時間'];
+                    const patientIdIndex = columnMap['患者番号'];
+                    const departmentIndex = columnMap['診療科'];
+                    
+                    if (statusIndex === undefined || timeIndex === undefined || 
+                        patientIdIndex === undefined || departmentIndex === undefined) {
+                        console.error('必要な列が見つかりません:', {
+                            ステータス: statusIndex,
+                            時間: timeIndex,
+                            患者番号: patientIdIndex,
+                            診療科: departmentIndex
+                        });
+                        return {
+                            error: '必要な列が見つかりません',
+                            records: [],
+                            debug: { method: 'error', columnMap }
+                        };
+                    }
+                    
+                    // tbody内の全行を取得
+                    const tbody = document.querySelector('tbody');
+                    if (!tbody) {
+                        console.error('tbody要素が見つかりません');
+                        return {
+                            error: 'tbody要素が見つかりません',
+                            records: [],
+                            debug: { method: 'error' }
+                        };
+                    }
+                    
+                    const allRows = tbody.querySelectorAll('tr');
+                    console.log('全行数:', allRows.length);
+                    
+                    let accountWaitingCount = 0;
+                    
+                    // 各行をチェック
+                    for (let i = 0; i < allRows.length; i++) {
                         try {
-                            const row = result.snapshotItem(i);
+                            const row = allRows[i];
                             const cells = Array.from(row.querySelectorAll('td'));
                             
-                            if (cells.length < 5) continue; // 最低限の列数チェック
+                            // 必要な列数があるかチェック
+                            const maxIndex = Math.max(statusIndex, timeIndex, patientIdIndex, departmentIndex);
+                            if (cells.length <= maxIndex) {
+                                continue;
+                            }
+                            
+                            // ステータス列をチェック
+                            const statusCell = cells[statusIndex];
+                            const statusText = statusCell ? statusCell.textContent.trim() : '';
+                            
+                            // 「会計待」または「再計待」が含まれているかチェック
+                            if (!statusText.includes('会計待') && !statusText.includes('再計待')) {
+                                continue;  // この行はスキップ
+                            }
+                            
+                            accountWaitingCount++;
+                            
+                            // 再会計フラグ
+                            const isReAccount = statusText.includes('再計待');
                             
                             let patientId = '';
                             let timeValue = '';
                             let department = '不明';
-                            let isReAccount = false;
                             
-                            // 再会計フラグの確認（より堅牢な方法）
-                            const rowText = row.textContent;
-                            isReAccount = rowText.includes('再計待');
+                            // 時間の取得
+                            const timeCell = cells[timeIndex];
+                            if (timeCell) {
+                                const text = timeCell.textContent.trim();
+                                if (/^\d{1,2}:\d{2}$/.test(text)) {
+                                    timeValue = text;
+                                }
+                            }
                             
-                            // 3列目: 時間（14:22など）
-                            timeValue = cells[2]?.textContent.trim();
+                            // 患者番号の取得
+                            const patientCell = cells[patientIdIndex];
+                            if (patientCell) {
+                                // セル内のリンクをチェック
+                                const link = patientCell.querySelector('a');
+                                if (link) {
+                                    const linkText = link.textContent.trim();
+                                    if (/^\d{1,4}$/.test(linkText)) {
+                                        patientId = linkText;
+                                    }
+                                }
+                                // リンクがない場合、セル自体のテキストをチェック
+                                if (!patientId) {
+                                    const text = patientCell.textContent.trim();
+                                    if (/^\d{1,4}$/.test(text)) {
+                                        patientId = text;
+                                    }
+                                }
+                            }
                             
-                            // 5列目: 患者ID（490、687、488など）
-                            const patientIdCell = cells[4];
-                            if (patientIdCell) {
-                                // セル内のテキストを直接取得
-                                const cellText = patientIdCell.textContent.trim();
-                                console.log('5列目のセル内容:', cellText);
+                            // 診療科の取得
+                            const departmentCell = cells[departmentIndex];
+                            if (departmentCell) {
+                                let deptText = departmentCell.textContent.trim();
+                                // 編集ボタンなどの余計なテキストを除去
+                                deptText = deptText.replace(/編集$/, '').trim();
+                                deptText = deptText.replace(/\s+/g, ' ');
                                 
-                                // 数字のみを抽出（3-4桁の患者ID）
-                                const idMatch = cellText.match(/\\b\\d{3,4}\\b/);
-                                if (idMatch) {
-                                    patientId = idMatch[0];
-                                    console.log('抽出された患者ID:', patientId);
-                                } else {
-                                    console.log('患者IDパターンにマッチしませんでした:', cellText);
-                                }
-                            } else {
-                                console.log('5列目のセルが見つかりませんでした');
-                            }
-                            
-                            // 診療科の取得（柔軟な方法）
-                            for (let cellIndex = 5; cellIndex < cells.length; cellIndex++) {
-                                const cellText = cells[cellIndex]?.textContent.trim();
-                                if (cellText && (
-                                    cellText.includes('科') || 
-                                    cellText.includes('外来') || 
-                                    cellText.includes('内科') ||
-                                    cellText.includes('外科') ||
-                                    cellText.includes('整形') ||
-                                    cellText.includes('皮膚') ||
-                                    cellText.includes('眼科') ||
-                                    cellText.includes('耳鼻') ||
-                                    cellText.includes('精神') ||
-                                    cellText.includes('訪問') ||
-                                    cellText.includes('看護')
-                                )) {
-                                    // 編集ボタンなどの余計なテキストを除去
-                                    department = cellText.replace(/編集$/, '').trim();
-                                    break;
+                                if (deptText && deptText !== '編集' && deptText.length > 1) {
+                                    department = deptText;
                                 }
                             }
                             
-                            // データの妥当性チェック
+                            // 必要なデータが揃っているかチェック
                             if (patientId && timeValue) {
                                 const record = {
                                     patient_id: patientId,
@@ -444,6 +658,7 @@ async def extract_patient_data(page, user_info):
                                     patientId: patientId || 'なし',
                                     timeValue: timeValue || 'なし',
                                     department,
+                                    status: statusText,
                                     cellCount: cells.length
                                 });
                             }
@@ -453,12 +668,16 @@ async def extract_patient_data(page, user_info):
                         }
                     }
                     
+                    console.log('会計待ち行数:', accountWaitingCount);
+                    
                     return {
                         records: records,
                         debug: {
                             extractedCount: records.length,
-                            method: 'Fixed_XPath_v2',
-                            accountWaitingRows: result.snapshotLength
+                            method: 'ColumnName_Status_Based',
+                            accountWaitingRows: accountWaitingCount,
+                            totalRows: allRows.length,
+                            columnMap: columnMap
                         },
                         pageTitle: document.title,
                         url: window.location.href,
@@ -482,7 +701,13 @@ async def extract_patient_data(page, user_info):
         
         logger.debug(f"{user_info['hospital_name']}: "
                    f"抽出件数={debug_info.get('extractedCount', 0)}, "
-                   f"方式={debug_info.get('method', 'unknown')}")
+                   f"方式={debug_info.get('method', 'unknown')}, "
+                   f"会計待ち行数={debug_info.get('accountWaitingRows', 0)}, "
+                   f"全行数={debug_info.get('totalRows', 0)}")
+        
+        # 列マッピング情報をログ出力
+        if 'columnMap' in debug_info:
+            logger.debug(f"{user_info['hospital_name']}: 列マッピング={debug_info['columnMap']}")
         
         if extracted_records:
             logger.info(f"{user_info['hospital_name']}: {len(extracted_records)}件のデータを抽出しました")
@@ -499,13 +724,87 @@ async def extract_patient_data(page, user_info):
         logger.error(f"{user_info['hospital_name']}: データ抽出中にエラー: {e}")
         logger.error(traceback.format_exc())
         return []
+
+# async def debug_page_structure(page, user_info):
+#     """XPath対応のページ構造デバッグ分析（hospitalName削除版）"""
+#     try:
+#         logger.info(f"{user_info['hospital_name']}: XPathベースページ構造分析を開始します")
+        
+#         # XPath 1.0対応の構造分析
+#         structure_info = await page.evaluate("""
+#             () => {
+#                 try {
+#                     // 基本的なページ構造の確認
+#                     const tables = document.querySelectorAll('table');
+#                     const tableCount = tables.length;
+                    
+#                     // XPath 1.0で会計待ち行を検出
+#                     const accountWaitingXPath = "//td[contains(text(), '会計待') or contains(text(), '再計待')]/parent::tr";
+#                     const result = document.evaluate(accountWaitingXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+#                     const accountWaitingRows = result.snapshotLength;
+                    
+#                     // JavaScriptの正規表現で患者番号を検出（XPath 1.0対応）
+#                     let patientIdElements = 0;
+#                     const allElements = document.querySelectorAll('*');
+#                     allElements.forEach(element => {
+#                         const text = element.textContent.trim();
+#                         // 3-4桁の数字のみを含むテキスト
+#                         if (/^\\d{1,4}$/.test(text)) {
+#                             patientIdElements++;
+#                         }
+#                     });
+                    
+#                     // 時間データの検出（JavaScriptの正規表現使用）
+#                     let timeElements = 0;
+#                     allElements.forEach(element => {
+#                         const text = element.textContent.trim();
+#                         // HH:MM形式の時間
+#                         if (/^\\d{1,2}:\\d{2}$/.test(text)) {
+#                             timeElements++;
+#                         }
+#                     });
+                    
+#                     // *** hospitalName関連のコードを削除 ***
+#                     // const hospitalXPath = "//*[contains(text(), 'クリニック') or contains(text(), '病院') or contains(text(), '医院')]";
+#                     // const hospitalResult = document.evaluate(hospitalXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+#                     // const hospitalName = hospitalResult.singleNodeValue ? hospitalResult.singleNodeValue.textContent.trim() : 'なし';
+                    
+#                     return {
+#                         tableCount,
+#                         accountWaitingRows,
+#                         patientIdElements,
+#                         timeElements,
+#                         // hospitalName, ← 削除
+#                         pageTitle: document.title,
+#                         url: window.location.href,
+#                         bodyTextLength: document.body.textContent.length,
+#                         analysis_method: 'XPath1.0_with_JS_Regex'
+#                     };
+#                 } catch (error) {
+#                     return {
+#                         error: error.message,
+#                         fallback: {
+#                             tableCount: document.querySelectorAll('table').length,
+#                             bodyTextLength: document.body ? document.body.textContent.length : 0
+#                             // hospitalName ← 削除
+#                         }
+#                     };
+#                 }
+#             }
+#         """)
+        
+#         logger.info(f"{user_info['hospital_name']}: ページ構造分析結果: {structure_info}")
+#         return structure_info
+        
+#     except Exception as e:
+#         logger.error(f"{user_info['hospital_name']}: ページ構造分析中にエラー: {e}")
+#         return {"error": str(e)}
                 
 async def debug_page_structure(page, user_info):
-    """XPath対応のページ構造デバッグ分析（hospitalName削除版）"""
+    """列名ベースのページ構造デバッグ分析（完全版）"""
     try:
-        logger.info(f"{user_info['hospital_name']}: XPathベースページ構造分析を開始します")
+        logger.info(f"{user_info['hospital_name']}: 列名ベースページ構造分析を開始します")
         
-        # XPath 1.0対応の構造分析
         structure_info = await page.evaluate("""
             () => {
                 try {
@@ -513,47 +812,130 @@ async def debug_page_structure(page, user_info):
                     const tables = document.querySelectorAll('table');
                     const tableCount = tables.length;
                     
-                    // XPath 1.0で会計待ち行を検出
-                    const accountWaitingXPath = "//span[contains(text(), '会計待') or contains(text(), '再計待')]/ancestor::tr";
-                    const result = document.evaluate(accountWaitingXPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-                    const accountWaitingRows = result.snapshotLength;
+                    // ヘッダー行から列インデックスのマッピングを作成
+                    const headerRow = document.querySelector('thead tr');
+                    if (!headerRow) {
+                        return {
+                            error: 'ヘッダー行が見つかりません',
+                            fallback: {
+                                tableCount: tableCount,
+                                bodyTextLength: document.body ? document.body.textContent.length : 0
+                            }
+                        };
+                    }
                     
-                    // JavaScriptの正規表現で患者番号を検出（XPath 1.0対応）
+                    const headers = Array.from(headerRow.querySelectorAll('th'));
+                    const columnMap = {};
+                    headers.forEach((th, index) => {
+                        const columnName = th.textContent.trim();
+                        columnMap[columnName] = index;
+                    });
+                    
+                    // 必要な列のインデックスを取得
+                    const statusIndex = columnMap['ステータス'];
+                    const timeIndex = columnMap['時間'];
+                    const patientIdIndex = columnMap['患者番号'];
+                    const departmentIndex = columnMap['診療科'];
+                    
+                    // tbody内の全行を取得
+                    const tbody = document.querySelector('tbody');
+                    if (!tbody) {
+                        return {
+                            error: 'tbody要素が見つかりません',
+                            columnMap: columnMap,
+                            tableCount: tableCount
+                        };
+                    }
+                    
+                    const allRows = tbody.querySelectorAll('tr');
+                    
+                    // 会計待ち行をカウント（ステータス列から）
+                    let accountWaitingRows = 0;
+                    if (statusIndex !== undefined) {
+                        allRows.forEach(row => {
+                            const cells = Array.from(row.querySelectorAll('td'));
+                            if (cells.length > statusIndex) {
+                                const statusCell = cells[statusIndex];
+                                const statusText = statusCell ? statusCell.textContent.trim() : '';
+                                if (statusText.includes('会計待') || statusText.includes('再計待')) {
+                                    accountWaitingRows++;
+                                }
+                            }
+                        });
+                    }
+                    
+                    // 患者番号要素をカウント（患者番号列から）
                     let patientIdElements = 0;
-                    const allElements = document.querySelectorAll('*');
-                    allElements.forEach(element => {
-                        const text = element.textContent.trim();
-                        // 3-4桁の数字のみを含むテキスト
-                        if (/^\\d{3,4}$/.test(text)) {
-                            patientIdElements++;
-                        }
-                    });
+                    if (patientIdIndex !== undefined && statusIndex !== undefined) {
+                        allRows.forEach(row => {
+                            const cells = Array.from(row.querySelectorAll('td'));
+                            if (cells.length > Math.max(statusIndex, patientIdIndex)) {
+                                // ステータスが会計待ちの行のみカウント
+                                const statusCell = cells[statusIndex];
+                                const statusText = statusCell ? statusCell.textContent.trim() : '';
+                                if (statusText.includes('会計待') || statusText.includes('再計待')) {
+                                    const patientCell = cells[patientIdIndex];
+                                    const text = patientCell ? patientCell.textContent.trim() : '';
+                                    if (/^\d{1,4}$/.test(text)) {
+                                        patientIdElements++;
+                                    }
+                                }
+                            }
+                        });
+                    }
                     
-                    // 時間データの検出（JavaScriptの正規表現使用）
+                    // 時間要素をカウント（時間列から）
                     let timeElements = 0;
-                    allElements.forEach(element => {
-                        const text = element.textContent.trim();
-                        // HH:MM形式の時間
-                        if (/^\\d{1,2}:\\d{2}$/.test(text)) {
-                            timeElements++;
-                        }
-                    });
+                    if (timeIndex !== undefined && statusIndex !== undefined) {
+                        allRows.forEach(row => {
+                            const cells = Array.from(row.querySelectorAll('td'));
+                            if (cells.length > Math.max(statusIndex, timeIndex)) {
+                                // ステータスが会計待ちの行のみカウント
+                                const statusCell = cells[statusIndex];
+                                const statusText = statusCell ? statusCell.textContent.trim() : '';
+                                if (statusText.includes('会計待') || statusText.includes('再計待')) {
+                                    const timeCell = cells[timeIndex];
+                                    const text = timeCell ? timeCell.textContent.trim() : '';
+                                    if (/^\d{1,2}:\d{2}$/.test(text)) {
+                                        timeElements++;
+                                    }
+                                }
+                            }
+                        });
+                    }
                     
-                    // *** hospitalName関連のコードを削除 ***
-                    // const hospitalXPath = "//*[contains(text(), 'クリニック') or contains(text(), '病院') or contains(text(), '医院')]";
-                    // const hospitalResult = document.evaluate(hospitalXPath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-                    // const hospitalName = hospitalResult.singleNodeValue ? hospitalResult.singleNodeValue.textContent.trim() : 'なし';
+                    // 診療科要素をカウント（診療科列から）
+                    let departmentElements = 0;
+                    if (departmentIndex !== undefined && statusIndex !== undefined) {
+                        allRows.forEach(row => {
+                            const cells = Array.from(row.querySelectorAll('td'));
+                            if (cells.length > Math.max(statusIndex, departmentIndex)) {
+                                // ステータスが会計待ちの行のみカウント
+                                const statusCell = cells[statusIndex];
+                                const statusText = statusCell ? statusCell.textContent.trim() : '';
+                                if (statusText.includes('会計待') || statusText.includes('再計待')) {
+                                    const deptCell = cells[departmentIndex];
+                                    const text = deptCell ? deptCell.textContent.trim() : '';
+                                    if (text && text.length > 1 && text !== '編集') {
+                                        departmentElements++;
+                                    }
+                                }
+                            }
+                        });
+                    }
                     
                     return {
                         tableCount,
+                        totalRows: allRows.length,
                         accountWaitingRows,
                         patientIdElements,
                         timeElements,
-                        // hospitalName, ← 削除
+                        departmentElements,
+                        columnMap,
                         pageTitle: document.title,
                         url: window.location.href,
                         bodyTextLength: document.body.textContent.length,
-                        analysis_method: 'XPath1.0_with_JS_Regex'
+                        analysis_method: 'ColumnName_Status_Based'
                     };
                 } catch (error) {
                     return {
@@ -561,7 +943,6 @@ async def debug_page_structure(page, user_info):
                         fallback: {
                             tableCount: document.querySelectorAll('table').length,
                             bodyTextLength: document.body ? document.body.textContent.length : 0
-                            // hospitalName ← 削除
                         }
                     };
                 }
@@ -574,7 +955,7 @@ async def debug_page_structure(page, user_info):
     except Exception as e:
         logger.error(f"{user_info['hospital_name']}: ページ構造分析中にエラー: {e}")
         return {"error": str(e)}
-                
+    
 async def process_and_insert_data(records, hospital_info):
     """データを医療機関情報とともにmedical_data_inserterに渡す"""
     try:
