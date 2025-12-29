@@ -1,0 +1,1 @@
+py C:\Users\miyake2106\Desktop\wk\PriBot\pribot.py

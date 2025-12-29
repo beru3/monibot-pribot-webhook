@@ -1,0 +1,1 @@
+.spin-slow{animation:spin 2.5s linear infinite!important}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}

@@ -1,0 +1,9 @@
+powershell "Get-WmiObject Win32_Process | Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*webhook_server.py*' } | ForEach-Object { Write-Host \"Webhook PID: $($_.ProcessId)\" }"
+
+
+
+C:\Users\monibot>powershell "Get-WmiObject Win32_Process | Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*webhook_server.py*' } | ForEach-Object { Write-Host \"Webhook PID: $($_.ProcessId)\" }"
+Webhook PID: 2892
+Webhook PID: 21952
+
+C:\Users\monibot>

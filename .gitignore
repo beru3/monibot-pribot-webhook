@@ -1,0 +1,39 @@
+# Backup folder
+BK/
+
+# Virtual environment
+venv/
+
+# Tools
+mysql-tools/
+
+# Account info (sensitive)
+アカウント情報_API情報/
+
+# Logs
+MoniBot/log/
+MoniBot/logs/
+PriBot/log/
+PriBot/pribot_debug/
+*.log
+
+# Session data
+MoniBot/session/
+
+# Lock files
+*.lock
+*_pids.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Misc
+move
+クエリ.txt
+★★★*

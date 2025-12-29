@@ -1,0 +1,90 @@
+==========================================
+Webhook Diagnosis Tool - DEBUG VERSION
+==========================================
+This version will show exactly where any errors occur
+
+Step 1: Testing basic commands...
+Current directory: C:\Users\monibot\Desktop\wk\MoniBot
+User: monibot
+
+Step 2: Testing tasklist command...
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+python.exe                    2892 Console                    1     17,960 K
+python.exe                    3736 Console                    1     60,176 K
+python.exe                    5364 Console                    1     63,292 K
+python.exe                   21952 Console                    1     36,104 K
+tasklist: SUCCESS
+
+Step 3: Testing netstat command...
+netstat: Completed (exit code: 0)
+
+Step 4: Testing PowerShell availability...
+PowerShell test successful
+PowerShell: SUCCESS
+
+Step 5: Testing simple PowerShell process query...
+
+   Id ProcessName
+   -- -----------
+ 2892 python
+ 3736 python
+ 5364 python
+21952 python
+
+
+PowerShell Get-Process: SUCCESS
+
+Step 6: Testing file existence checks...
+File check 1: webhook_server.py not in current dir
+
+Step 7: Testing variable operations...
+Variable test: Count = 1
+Variable operations: SUCCESS
+
+==========================================
+DEBUG SUMMARY
+==========================================
+All basic tests completed.
+Check debug_log.txt for detailed error information.
+
+If the script reaches this point, the main diagnosis should work.
+Press any key to run a simplified diagnosis...
+Press any key to continue . . .
+
+==========================================
+SIMPLIFIED DIAGNOSIS
+==========================================
+Python processes:
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+python.exe                    2892 Console                    1     17,960 K
+python.exe                    3736 Console                    1     60,176 K
+python.exe                    5364 Console                    1     63,292 K
+python.exe                   21952 Console                    1     36,104 K
+
+Port 8080 check:
+  TCP    0.0.0.0:8080           0.0.0.0:0              LISTENING       2892
+  TCP    192.168.250.220:8080   192.168.250.52:64211   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.54:49958   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.61:61048   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.63:56057   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.65:50962   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.67:52241   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.71:54893   ESTABLISHED     2892
+  TCP    192.168.250.220:8080   192.168.250.93:55374   ESTABLISHED     2892
+  TCP    192.168.250.220:56020  192.168.250.220:8080   TIME_WAIT       0
+  TCP    192.168.250.220:56081  192.168.250.220:8080   TIME_WAIT       0
+  TCP    192.168.250.220:56170  192.168.250.220:8080   TIME_WAIT       0
+  TCP    192.168.250.220:56216  192.168.250.220:8080   TIME_WAIT       0
+  TCP    [fe80::bff1:dcd5:28a7:38e3%8]:54248  [fe80::d99b:16b6:7e90:901%8]:8080  ESTABLISHED     5360
+Port 8080 is in use
+
+Port 5000 check:
+Port 5000 is free
+
+Diagnosis completed successfully
+Check debug_log.txt for any error details.
+Press any key to continue . . .

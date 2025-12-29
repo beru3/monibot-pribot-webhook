@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ウェブフックテストクライアント - OASIS INNOVATION</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/favicon-BPhJjKpZ.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon-DjI6rx6h.png">
+    <link rel="stylesheet" href="./assets/common-D6Lta79p.css">
+    <link rel="stylesheet" href="./assets/webhook-client.css">
+</head>
+
+<body class="min-h-dynamic bg-gray-100 flex flex-col">
+    <main class="flex-grow flex flex-col mt-8">
+        <div class="w-full max-w-4xl mx-auto px-8 lg:px-0">
+            <!-- ヘッダー部分 -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center">
+                    <img src="./assets/logo-002-D24WXjc6.png" alt="MoniBot" class="h-10 mr-4">
+                    <h1 class="text-3xl font-bold">ウェブフックテストクライアント</h1>
+                </div>
+                <div>
+                    <a href="webhook_monitor.html" class="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 flex items-center justify-center">
+                        <i class="bi bi-eye mr-2"></i>モニターへ戻る
+                    </a>
+                </div>
+            </div>
+
+            <!-- 単発送信 -->
+            <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4">ウェブフック送信</h2>
+                <div class="mb-4">
+                    <label for="method" class="block text-lg font-medium text-gray-700 mb-2">HTTPメソッド</label>
+                    <select id="method" class="w-full border-gray-300 rounded-lg shadow-sm px-4 py-2">
+                        <option value="POST">POST</option>
+                        <option value="GET">GET</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="data" class="block text-lg font-medium text-gray-700 mb-2">データ (JSON)</label>
+                    <textarea id="data" rows="8" class="w-full border-gray-300 rounded-lg shadow-sm px-4 py-2 font-mono">{
+                        "event_type": "processing_ticket",
+                        "id": 1234,
+                        "projectId": 601233,
+                        "issueKey": "BILLING-1234",
+                        "summary": "テストチケット",
+                        "description": "電子カルテ名: カルテシステムA\n病院名: 東京中央病院\n患者ID: P12345\n診察日: 2025-04-03\n取得時間: 14:00:00",
+                        "status": {
+                          "id": 2,
+                          "name": "処理中"
+                        },
+                        "assigneeId": 1646501
+                      }</textarea>
+                </div>
+                <button id="send-webhook" class="bg-green-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-green-600">
+                    <i class="bi bi-send mr-2"></i>送信
+                </button>
+                
+                <!-- 結果表示 -->
+                <div id="result" class="mt-4 hidden">
+                    <h3 class="text-lg font-bold mb-2">送信結果</h3>
+                    <pre id="result-content" class="bg-gray-50 p-4 rounded-lg overflow-x-auto max-h-64"></pre>
+                </div>
+            </div>
+
+            <!-- 自動送信 -->
+            <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4">自動送信モード</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="interval" class="block text-lg font-medium text-gray-700 mb-2">送信間隔 (秒)</label>
+                        <input type="number" id="interval" value="10" min="1" class="w-full border-gray-300 rounded-lg shadow-sm px-4 py-2">
+                    </div>
+                    <div>
+                        <label for="count" class="block text-lg font-medium text-gray-700 mb-2">送信回数 (0=無制限)</label>
+                        <input type="number" id="count" value="10" min="0" class="w-full border-gray-300 rounded-lg shadow-sm px-4 py-2">
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="start-auto" class="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 mr-4">
+                        <i class="bi bi-play-fill mr-2"></i>自動送信開始
+                    </button>
+                    <button id="stop-auto" class="bg-red-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-600 hidden">
+                        <i class="bi bi-stop-fill mr-2"></i>自動送信停止
+                    </button>
+                    <div id="auto-status" class="ml-4 hidden">
+                        送信中: <span id="auto-count" class="font-bold">0</span> 件
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-4 bg-blue-50 text-blue-700 rounded-lg">
+                    <p><i class="bi bi-info-circle mr-2"></i>自動送信モードでは、患者登録・予約・支払い処理などの様々なタイプのテストデータがランダムに生成されます。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg ...  py-4 px-4 lg:px-8 mt-auto" style="padding-bottom: calc(16px + env(safe-area-inset-bottom));">
+        <div class="mx-auto flex justify-between items-center">
+            <!-- 左端: ホームへ戻るボタン -->
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 flex items-center justify-center">
+                    <i class="bi bi-house-door mr-2"></i>ホームへ戻る
+                </a>
+            </div>
+
+            <!-- 右端: アイコンとバージョン -->
+            <div class="flex items-center">
+                <img src="/assets/logo-002-D24WXjc6.png" alt="logo" class="h-8 mr-4 object-contain">
+                <img src="./assets/logo-001-D8JCHPth.png" alt="logo" class="h-8 mr-4 object-contain">
+                <span class="text-sm">Ver. 1.0.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendButton = document.getElementById('send-webhook');
+            const startAutoButton = document.getElementById('start-auto');
+            const stopAutoButton = document.getElementById('stop-auto');
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('result-content');
+            const autoStatus = document.getElementById('auto-status');
+            const autoCountSpan = document.getElementById('auto-count');
+            
+            let autoSendInterval = null;
+            let autoSendCount = 0;
+            
+            // 単発ウェブフック送信
+            sendButton.addEventListener('click', function() {
+                const method = document.getElementById('method').value;
+                const dataField = document.getElementById('data');
+                
+                try {
+                    // JSONデータをパース
+                    const data = JSON.parse(dataField.value);
+                    sendWebhook(data, method);
+                } catch (e) {
+                    showResult({
+                        error: true, 
+                        message: 'JSONデータが不正です: ' + e.message
+                    });
+                }
+            });
+            
+            // 自動送信開始
+            startAutoButton.addEventListener('click', function() {
+                const interval = parseInt(document.getElementById('interval').value) || 10;
+                const count = parseInt(document.getElementById('count').value) || 0;
+                
+                startAutoSend(interval, count);
+                
+                startAutoButton.classList.add('hidden');
+                stopAutoButton.classList.remove('hidden');
+                autoStatus.classList.remove('hidden');
+            });
+            
+            // 自動送信停止
+            stopAutoButton.addEventListener('click', function() {
+                stopAutoSend();
+                
+                stopAutoButton.classList.add('hidden');
+                startAutoButton.classList.remove('hidden');
+                autoStatus.classList.add('hidden');
+            });
+            
+            // ウェブフック送信関数
+            function sendWebhook(data, method = 'POST') {
+                const url = '/webhook/new_ticket';
+                let fetchOptions = {
+                    method: method
+                };
+                
+                // GETリクエストの場合は、データをクエリパラメータに変換
+                let finalUrl = url;
+                if (method === 'GET') {
+                    const params = new URLSearchParams();
+                    for (const key in data) {
+                        params.append(key, typeof data[key] === 'object' ? 
+                            JSON.stringify(data[key]) : data[key]);
+                    }
+                    finalUrl = `${url}?${params.toString()}`;
+                } else {
+                    // POSTリクエストの場合は、データをJSONボディとして送信
+                    fetchOptions.headers = {
+                        'Content-Type': 'application/json'
+                    };
+                    fetchOptions.body = JSON.stringify(data);
+                }
+                
+                // リクエスト送信
+                fetch(finalUrl, fetchOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        showResult({
+                            success: true,
+                            sent: {
+                                method: method,
+                                url: finalUrl,
+                                data: data
+                            },
+                            response: result
+                        });
+                    })
+                    .catch(error => {
+                        showResult({
+                            error: true,
+                            message: error.message
+                        });
+                    });
+            }
+            
+            // 結果表示
+            function showResult(result) {
+                resultDiv.classList.remove('hidden');
+                resultContent.textContent = JSON.stringify(result, null, 2);
+            }
+            
+            // 自動送信開始
+            function startAutoSend(interval, maxCount) {
+                autoSendCount = 0;
+                updateAutoCount();
+                
+                autoSendInterval = setInterval(() => {
+                    // ランダムなウェブフックデータを生成
+                    const data = generateRandomData();
+                    
+                    // ウェブフック送信（70% POSTで30% GETリクエスト）
+                    const method = Math.random() > 0.3 ? 'POST' : 'GET';
+                    sendWebhook(data, method);
+                    
+                    // カウント更新
+                    autoSendCount++;
+                    updateAutoCount();
+                    
+                    // 最大回数に達したらストップ
+                    if (maxCount > 0 && autoSendCount >= maxCount) {
+                        stopAutoSend();
+                        stopAutoButton.classList.add('hidden');
+                        startAutoButton.classList.remove('hidden');
+                        autoStatus.classList.add('hidden');
+                    }
+                }, interval * 1000);
+            }
+            
+            // 自動送信停止
+            function stopAutoSend() {
+                if (autoSendInterval) {
+                    clearInterval(autoSendInterval);
+                    autoSendInterval = null;
+                }
+            }
+            
+            // 自動送信カウント更新
+            function updateAutoCount() {
+                autoCountSpan.textContent = autoSendCount;
+            }
+            
+            // ランダムなウェブフックデータ生成
+            function generateRandomData() {
+                const testTypes = [
+                    "patient_registration",
+                    "appointment_scheduled",
+                    "appointment_cancelled",
+                    "patient_checkout",
+                    "payment_processed"
+                ];
+                
+                const departments = ["内科", "外科", "小児科", "整形外科", "皮膚科", "眼科", "耳鼻科"];
+                const statuses = ["pending", "completed", "cancelled", "in_progress"];
+                const priorities = ["low", "medium", "high", "urgent"];
+                
+                const eventType = testTypes[Math.floor(Math.random() * testTypes.length)];
+                
+                const data = {
+                    event_type: eventType,
+                    event_id: `${eventType}-${Math.floor(Math.random() * 90000) + 10000}`,
+                    timestamp: new Date().toISOString(),
+                    data: {
+                        patient_id: `P${Math.floor(Math.random() * 9000) + 1000}`,
+                        staff_id: Math.floor(Math.random() * 20) + 1,
+                        department: departments[Math.floor(Math.random() * departments.length)],
+                        status: statuses[Math.floor(Math.random() * statuses.length)],
+                        priority: priorities[Math.floor(Math.random() * priorities.length)]
+                    }
+                };
+                
+                // イベントタイプ別のフィールド追加
+                if (eventType === "payment_processed") {
+                    data.data.amount = Math.round(Math.random() * 4950 + 50);
+                    data.data.currency = "JPY";
+                    data.data.payment_method = ["credit", "cash", "insurance"][Math.floor(Math.random() * 3)];
+                }
+                
+                return data;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医療機関登録時のガイドライン</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Meiryo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .slide-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .slide-header {
+            background-color: #2c5282;
+            color: white;
+            padding: 16px 24px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .slide-content {
+            padding: 24px;
+        }
+        h2 {
+            color: #2c5282;
+            margin-top: 0;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        .point {
+            margin-bottom: 20px;
+        }
+        .point-title {
+            font-weight: bold;
+            color: #2c5282;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        .example {
+            margin-top: 8px;
+            padding: 12px;
+            background-color: #f0f7ff;
+            border-left: 4px solid #4299e1;
+            border-radius: 4px;
+        }
+        .good {
+            color: #2f855a;
+            font-weight: bold;
+        }
+        .bad {
+            color: #c53030;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 12px;
+            margin-top: 16px;
+            border-radius: 4px;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #c05621;
+            margin-bottom: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        th {
+            background-color: #edf2f7;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        .summary {
+            background-color: #ebf8ff;
+            padding: 16px;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+        .summary-title {
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-container">
+    <!-- タイトルスライド -->
+    <div class="slide">
+        <div class="slide-header">
+            PriBot 医療機関登録時のガイドライン
+        </div>
+        <div class="slide-content" style="text-align: center; padding: 60px 24px;">
+            <h1 style="font-size: 32px; margin-bottom: 30px;">医療機関登録時のガイドライン</h1>
+            <p style="font-size: 18px; margin-bottom: 40px;">PDF振り分けを正確に行うための設定方法</p>
+            <p style="font-size: 14px; margin-top: 60px; color: #666;">PriBot システム管理者向け</p>
+        </div>
+    </div>
+
+    <!-- イントロスライド -->
+    <div class="slide">
+        <div class="slide-header">
+            はじめに
+        </div>
+        <div class="slide-content">
+            <h2>PriBotによるPDF振り分けの仕組み</h2>
+            <div class="point">
+                <p>PriBotはPDFファイルから医療機関名を抽出し、登録された医療機関情報と照合して振り分けを行います。</p>
+            </div>
+            
+            <div class="example">
+                <div class="point-title">振り分けの流れ</div>
+                <ol>
+                    <li>PDFファイルからテキストを抽出</li>
+                    <li>フォーマット（請求書・処方箋など）を識別</li>
+                    <li>医療機関名を抽出</li>
+                    <li>Backlogに登録された医療機関とマッチング</li>
+                    <li>マッチした医療機関のフォーマット別振り分け先にファイルを移動</li>
+                </ol>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">重要ポイント</div>
+                <p>医療機関名の登録方法によって、PDFの振り分け精度が大きく変わります。正確な振り分けのためには、適切な医療機関名の登録と振り分け設定が必要です。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 医療機関名登録のポイント -->
+    <div class="slide">
+        <div class="slide-header">
+            医療機関名の登録ポイント
+        </div>
+        <div class="slide-content">
+            <h2>正確な振り分けのための医療機関名</h2>
+            
+            <div class="point">
+                <div class="point-title">1. 正式名称を使用する</div>
+                <p>法人名を含む正式な医療機関名を使用してください。</p>
+                <div class="example">
+                    <p><span class="good">〇 良い例：</span>「医療法人社団 山田内科クリニック」</p>
+                    <p><span class="bad">× 避けるべき例：</span>「山田クリニック」（短すぎる）</p>
+                </div>
+            </div>
+            
+            <div class="point">
+                <div class="point-title">2. 十分に識別可能な名称にする</div>
+                <p>他の医療機関と混同しないよう、固有性の高い名称を使用してください。</p>
+                <div class="example">
+                    <p><span class="good">〇 良い例：</span>「医療法人五一六五ナゴヤガーデンクリニック」</p>
+                    <p><span class="bad">× 避けるべき例：</span>「ガーデンクリニック」（一般的すぎる）</p>
+                </div>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">マッチング方法</div>
+                <p>PriBotは「登録された医療機関名がPDFから抽出された医療機関名に含まれるか」でマッチングを行います。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 医療機関名登録のポイント2 -->
+    <div class="slide">
+        <div class="slide-header">
+            医療機関名の登録ポイント（続き）
+        </div>
+        <div class="slide-content">
+            <div class="point">
+                <div class="point-title">3. PDFに表示される名称と一致させる</div>
+                <p>実際のPDFに表示される医療機関名と完全に一致または含まれるようにしてください。</p>
+                <div class="example">
+                    <p>PDFの薬情や処方箋などに「三宅村国民健康保険直営中央診療所」と表示される場合、登録する医療機関名も同じにする</p>
+                </div>
+            </div>
+            
+            <div class="point">
+                <div class="point-title">4. 法人名や地域名を含める</div>
+                <p>同名のクリニックが存在する場合、法人名や地域名を含めて区別します。</p>
+                <div class="example">
+                    <p><span class="good">〇 良い例：</span>「医療法人吉松会 照葉浅部クリニック」、「西大宮整形外科くれクリニック」</p>
+                    <p><span class="bad">× 避けるべき例：</span>「整形外科クリニック」（一般的すぎる）</p>
+                </div>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">実際のPDFを確認</div>
+                <p>登録前に実際のPDFからどのような医療機関名が抽出されるか確認することで、マッチング精度を向上させることができます。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 振り分け設定 -->
+    <div class="slide">
+        <div class="slide-header">
+            振り分け設定について
+        </div>
+        <div class="slide-content">
+            <h2>フォーマット別の振り分け設定</h2>
+            
+            <div class="point">
+                <div class="point-title">フォーマット種別と振り分け先</div>
+                <p>同じ医療機関に対して複数の振り分け設定を行う場合は、それぞれのフォーマットに対応する課題を作成してください。</p>
+            </div>
+            
+            <table>
+                <tr>
+                    <th>設定名</th>
+                    <th>対象フォーマット</th>
+                    <th>説明</th>
+                </tr>
+                <tr>
+                    <td>0_共通</td>
+                    <td>すべて</td>
+                    <td>他のフォーマット設定がない場合のデフォルト振り分け先</td>
+                </tr>
+                <tr>
+                    <td>1_請求書</td>
+                    <td>診療費請求書兼領収書</td>
+                    <td>請求書フォーマットのPDFの振り分け先</td>
+                </tr>
+                <tr>
+                    <td>2_明細書</td>
+                    <td>診療費明細書</td>
+                    <td>明細書フォーマットのPDFの振り分け先</td>
+                </tr>
+                <tr>
+                    <td>3_請求明細書</td>
+                    <td>診療費請求書兼領収書（患者番号）</td>
+                    <td>請求明細書フォーマットのPDFの振り分け先</td>
+                </tr>
+                <tr>
+                    <td>4_処方箋</td>
+                    <td>処方箋</td>
+                    <td>処方箋フォーマットのPDFの振り分け先</td>
+                </tr>
+                <tr>
+                    <td>5_薬袋シール</td>
+                    <td>薬袋シール</td>
+                    <td>薬袋シールフォーマットのPDFの振り分け先</td>
+                </tr>
+                <tr>
+                    <td>6_薬情</td>
+                    <td>お薬情報</td>
+                    <td>薬情フォーマットのPDFの振り分け先</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 振り分け設定の実例 -->
+    <div class="slide">
+        <div class="slide-header">
+            振り分け設定の実例
+        </div>
+        <div class="slide-content">
+            <h2>実際の設定例</h2>
+            
+            <div class="point">
+                <div class="point-title">例：三宅村国民健康保険直営中央診療所</div>
+                <p>複数のフォーマットを個別に振り分ける場合</p>
+            </div>
+            
+            <table>
+                <tr>
+                    <th>設定ID</th>
+                    <th>振り分け先設定</th>
+                    <th>振り分け先フォルダパス</th>
+                </tr>
+                <tr>
+                    <td>課題1</td>
+                    <td>1_請求書</td>
+                    <td>C:\...\三宅村_請求書</td>
+                </tr>
+                <tr>
+                    <td>課題2</td>
+                    <td>5_薬袋シール</td>
+                    <td>C:\...\三宅村_薬袋シール</td>
+                </tr>
+                <tr>
+                    <td>課題3</td>
+                    <td>6_薬情</td>
+                    <td>C:\...\三宅村_薬情</td>
+                </tr>
+            </table>
+            
+            <div class="point" style="margin-top: 20px;">
+                <div class="point-title">例：西大宮整形外科くれクリニック</div>
+                <p>すべてのフォーマットを同じフォルダに振り分ける場合</p>
+            </div>
+            
+            <table>
+                <tr>
+                    <th>設定ID</th>
+                    <th>振り分け先設定</th>
+                    <th>振り分け先フォルダパス</th>
+                </tr>
+                <tr>
+                    <td>課題1</td>
+                    <td>0_共通</td>
+                    <td>C:\...\くれクリニック</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 設定時の注意点 -->
+    <div class="slide">
+        <div class="slide-header">
+            設定時の注意点
+        </div>
+        <div class="slide-content">
+            <h2>よくある問題と対策</h2>
+            
+            <div class="point">
+                <div class="point-title">問題：医療機関名が短すぎて誤マッチする</div>
+                <div class="example">
+                    <p><span class="bad">問題例：</span>「〇〇内科」という名前だと、「△△〇〇内科」とも「××〇〇内科」とも一致してしまう</p>
+                    <p><span class="good">対策：</span>法人名を含む正式名称を使用する。地域名を追加するなど、より具体的な名称にする</p>
+                </div>
+            </div>
+            
+            <div class="point">
+                <div class="point-title">問題：PDFから抽出される医療機関名と登録名が一致しない</div>
+                <div class="example">
+                    <p><span class="bad">問題例：</span>PDFには「医療法人社団 山田クリニック」と表示されているが、「山田医院」として登録している</p>
+                    <p><span class="good">対策：</span>実際のPDFを確認し、抽出される名称と一致するように登録名を修正する</p>
+                </div>
+            </div>
+            
+            <div class="point">
+                <div class="point-title">問題：フォーマット別の振り分け設定が足りない</div>
+                <div class="example">
+                    <p><span class="bad">問題例：</span>薬情フォーマットのPDFが入ってきたが、該当医療機関に薬情の振り分け設定がない</p>
+                    <p><span class="good">対策：</span>必要なフォーマットすべてに対して振り分け設定を作成する。または「0_共通」設定を用意する</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 設定フロー -->
+    <div class="slide">
+        <div class="slide-header">
+            医療機関の設定フロー
+        </div>
+        <div class="slide-content">
+            <h2>設定手順</h2>
+            
+            <ol>
+                <li><strong>実際のPDFの確認</strong>
+                    <ul>
+                        <li>PDFからどのような医療機関名が抽出されるか確認する</li>
+                        <li>必要なフォーマット（請求書・処方箋・薬情など）を把握する</li>
+                    </ul>
+                </li>
+                <li><strong>医療機関の登録</strong>
+                    <ul>
+                        <li>正確な医療機関名（法人名含む）を使用する</li>
+                        <li>PDFから抽出される医療機関名と一致するようにする</li>
+                    </ul>
+                </li>
+                <li><strong>振り分け設定の作成</strong>
+                    <ul>
+                        <li>フォーマットごとに振り分け先を設定する</li>
+                        <li>または「0_共通」で一括設定する</li>
+                    </ul>
+                </li>
+                <li><strong>テスト実施</strong>
+                    <ul>
+                        <li>実際のPDFで振り分けテストを行う</li>
+                        <li>うまく振り分けられない場合は設定を見直す</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <div class="summary">
+                <div class="summary-title">設定時のチェックポイント</div>
+                <ul>
+                    <li>医療機関名は十分に固有性があるか</li>
+                    <li>実際のPDFから抽出される医療機関名と合致するか</li>
+                    <li>必要なすべてのフォーマットに対して振り分け設定があるか</li>
+                    <li>振り分け先のフォルダパスは正しいか</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- まとめスライド -->
+    <div class="slide">
+        <div class="slide-header">
+            まとめ
+        </div>
+        <div class="slide-content">
+            <h2>正確な振り分けのために</h2>
+            
+            <div class="point">
+                <div class="point-title">医療機関名の登録</div>
+                <ul>
+                    <li>正式名称（法人名含む）を使用する</li>
+                    <li>十分に識別可能な名称にする</li>
+                    <li>PDFに表示される名称と一致させる</li>
+                    <li>法人名や地域名を含める</li>
+                </ul>
+            </div>
+            
+            <div class="point">
+                <div class="point-title">振り分け設定</div>
+                <ul>
+                    <li>フォーマットごとに適切な振り分け先を設定する</li>
+                    <li>フォルダパスは統一された命名規則で管理する</li>
+                    <li>必要に応じて「0_共通」設定も用意する</li>
+                </ul>
+            </div>
+            
+            <div class="note">
+                <div class="note-title">定期的な見直し</div>
+                <p>医療機関名の変更や新しいフォーマットへの対応のため、定期的に設定を見直すことをお勧めします。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
