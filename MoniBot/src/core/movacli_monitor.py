@@ -168,6 +168,7 @@ async def login_with_retry(page, hospital, max_retries=3):
 
             # 証明書選択が必要な場合、別スレッドで処理
             cert_thread = None
+            cert_order = None
             if hospital.get('certificate_order'):
                 cert_order = int(hospital['certificate_order'])
                 logger.info(f"証明書選択準備: {cert_order}番目")
@@ -177,37 +178,95 @@ async def login_with_retry(page, hospital, max_retries=3):
                 cert_thread.start()
 
             # モバクリのログインページへ遷移
+            # 注意: 証明書ダイアログが表示されると、ページ読み込みがブロックされるため
+            # wait_until='commit' で早期に制御を戻し、タイムアウトを回避する
             logger.debug(f"{hospital['hospital_name']}: page.goto開始")
-            await page.goto('https://c1.movacal.net/home', wait_until='domcontentloaded', timeout=60000)
+            try:
+                await page.goto('https://c1.movacal.net/home', wait_until='commit', timeout=90000)
+            except PlaywrightTimeoutError as goto_error:
+                # タイムアウトしても証明書選択が完了すればページが読み込まれる可能性がある
+                logger.warning(f"{hospital['hospital_name']}: page.gotoがタイムアウト、証明書ダイアログ待機中の可能性: {goto_error}")
+                # 証明書選択スレッドの完了を待つ
+                if cert_thread and cert_thread.is_alive():
+                    logger.debug(f"{hospital['hospital_name']}: 証明書選択スレッド完了を待機中...")
+                    cert_thread.join(timeout=30)
+                # 追加待機してページ読み込みを待つ
+                await asyncio.sleep(5)
             logger.debug(f"{hospital['hospital_name']}: page.goto完了")
 
             # 証明書選択スレッドの完了を待つ
-            if cert_thread:
+            if cert_thread and cert_thread.is_alive():
                 logger.debug(f"{hospital['hospital_name']}: 証明書選択スレッド完了待ち開始")
-                cert_thread.join()
+                cert_thread.join(timeout=30)
                 logger.debug(f"{hospital['hospital_name']}: 証明書選択スレッド完了")
 
             await asyncio.sleep(3)
 
-            # ID入力
-            logger.debug(f"{hospital['hospital_name']}: ID入力開始")
-            await page.fill('input#login-id', hospital['login_id'])
-            logger.debug(f"{hospital['hospital_name']}: ID入力完了")
-            await asyncio.sleep(0.5)
+            # ページの状態を確認（既にログイン済みかどうか）
+            current_url = page.url
+            logger.debug(f"{hospital['hospital_name']}: 現在のURL: {current_url}")
 
-            # パスワード入力
-            logger.debug(f"{hospital['hospital_name']}: パスワード入力開始")
-            await page.fill('input#login-password', hospital['password'])
-            logger.debug(f"{hospital['hospital_name']}: パスワード入力完了")
-            await asyncio.sleep(0.5)
+            # 既にhomeページにいる場合はログイン済みと判断
+            if 'home' in current_url:
+                # プルダウン要素があるか確認（ログイン済みの証拠）
+                try:
+                    dropdown_exists = await page.evaluate("""
+                        () => {
+                            return !!document.querySelector('select#outer-home-recept-list-period');
+                        }
+                    """)
+                    if dropdown_exists:
+                        logger.info(f"{hospital['hospital_name']}: 既にログイン済みです（セッション利用）")
+                        # ログイン成功として扱う
+                        pass  # 後続のプルダウン設定処理へ進む
+                    else:
+                        # homeページにいるがログイン画面の可能性
+                        logger.debug(f"{hospital['hospital_name']}: homeページだがプルダウンなし、ログインを試行")
+                        raise Exception("ログイン画面の可能性あり")
+                except Exception as session_check_error:
+                    logger.debug(f"{hospital['hospital_name']}: セッションチェック: {session_check_error}")
+                    # ログイン処理を続行
+                    pass
+            else:
+                # ログインページにいる場合、ログイン処理を実行
+                logger.debug(f"{hospital['hospital_name']}: ログインページを検出、ログイン処理を実行")
 
-            # ログインボタンクリック
-            logger.debug(f"{hospital['hospital_name']}: ログインボタンクリック開始")
-            await page.click('button[type="submit"].btn-secondary')
-            logger.debug(f"{hospital['hospital_name']}: ログインボタンクリック完了")
-            await asyncio.sleep(5)
+            # ログインフォームが存在するか確認
+            login_form_exists = False
+            try:
+                login_form_exists = await page.evaluate("""
+                    () => {
+                        const loginId = document.querySelector('input#login-id');
+                        const loginPw = document.querySelector('input#login-password');
+                        return !!(loginId && loginPw);
+                    }
+                """)
+            except Exception as form_check_error:
+                logger.debug(f"{hospital['hospital_name']}: ログインフォーム確認エラー: {form_check_error}")
 
-            # ログイン確認
+            if login_form_exists:
+                # ログインフォームがある場合のみログイン処理を実行
+                # ID入力
+                logger.debug(f"{hospital['hospital_name']}: ID入力開始")
+                await page.fill('input#login-id', hospital['login_id'])
+                logger.debug(f"{hospital['hospital_name']}: ID入力完了")
+                await asyncio.sleep(0.5)
+
+                # パスワード入力
+                logger.debug(f"{hospital['hospital_name']}: パスワード入力開始")
+                await page.fill('input#login-password', hospital['password'])
+                logger.debug(f"{hospital['hospital_name']}: パスワード入力完了")
+                await asyncio.sleep(0.5)
+
+                # ログインボタンクリック
+                logger.debug(f"{hospital['hospital_name']}: ログインボタンクリック開始")
+                await page.click('button[type="submit"].btn-secondary')
+                logger.debug(f"{hospital['hospital_name']}: ログインボタンクリック完了")
+                await asyncio.sleep(5)
+            else:
+                logger.debug(f"{hospital['hospital_name']}: ログインフォームなし、ログイン処理をスキップ")
+
+            # ログイン確認（再度URLを取得）
             current_url = page.url
             logger.debug(f"{hospital['hospital_name']}: ログイン後のURL: {current_url}")
             if 'home' in current_url:
@@ -489,7 +548,11 @@ async def extract_oasis_data(page, hospital, max_retries=3):
             
             if data:
                 logger.info(f"{hospital['hospital_name']}: {len(data)}件のOASIS会計データを抽出")
-            
+                for idx, record in enumerate(data):
+                    logger.debug(f"{hospital['hospital_name']}: データ{idx+1}: 患者ID={record.get('patient_id')}, 診療科={record.get('department')}, 時刻={record.get('end_time')}")
+            else:
+                logger.debug(f"{hospital['hospital_name']}: OASIS会計データなし（抽出成功、データ0件）")
+
             # 成功したらリトライ情報をログ
             if attempt > 0:
                 logger.info(f"{hospital['hospital_name']}: データ抽出成功（リトライ {attempt + 1}回目で成功）")
@@ -876,7 +939,10 @@ async def monitor_hospital(page, hospital, config, shutdown_event):
 
             # ステップ0: プルダウンを「全日」に強制設定（毎回）
             await ensure_dropdown_all_day(page, hospital['hospital_name'])
-            
+
+            # ステップ0.5: プルダウンが安定するまで待機（AJAX更新完了を待つ）
+            await wait_for_dropdown_stable(page, hospital['hospital_name'], max_wait_seconds=5)
+
             # ステップ1: ページの健全性チェック
             health_result = await check_page_health(page, hospital['hospital_name'])
 
@@ -1099,8 +1165,10 @@ async def monitor_hospital(page, hospital, config, shutdown_event):
                             except Exception as screenshot_error:
                                 logger.debug(f"{hospital['hospital_name']}: スクリーンショット保存失敗: {screenshot_error}")
 
-                        # リロード成功後は即座にデータ抽出を再開（待機せずcontinue）
-                        logger.info(f"{hospital['hospital_name']}: リロード完了、即座に監視を再開します")
+                        # リロード成功後、プルダウンが安定するまで待機してからデータ抽出を再開
+                        logger.info(f"{hospital['hospital_name']}: リロード完了、プルダウン安定化を待機します")
+                        await wait_for_dropdown_stable(page, hospital['hospital_name'], max_wait_seconds=5)
+                        logger.info(f"{hospital['hospital_name']}: 監視を再開します")
                         continue
                     else:
                         logger.error(f"{hospital['hospital_name']}: ページリロード失敗")
@@ -1157,54 +1225,197 @@ async def ensure_dropdown_all_day(page, hospital_name):
     監視ループの毎回実行される
     """
     try:
-        # 現在の値を確認
-        current_value = await asyncio.wait_for(
-            page.evaluate("""
-                () => {
-                    const select = document.querySelector('select#outer-home-recept-list-period');
-                    if (!select || select.selectedIndex < 0) return null;
-                    const selectedOption = select.options[select.selectedIndex];
-                    return selectedOption ? (selectedOption.value || '') : null;
-                }
-            """),
-            timeout=3.0
-        )
-        
-        # select要素が見つからない場合
+        # 現在の値を確認（リトライ付き）
+        current_value = None
+        for check_attempt in range(3):
+            dropdown_state = await asyncio.wait_for(
+                page.evaluate("""
+                    () => {
+                        const select = document.querySelector('select#outer-home-recept-list-period');
+                        if (!select) return { exists: false };
+                        if (select.selectedIndex < 0 || select.options.length === 0) {
+                            return { exists: true, ready: false, optionsCount: select.options.length, selectedIndex: select.selectedIndex };
+                        }
+                        const selectedOption = select.options[select.selectedIndex];
+                        return {
+                            exists: true,
+                            ready: true,
+                            value: selectedOption ? (selectedOption.value || '') : null,
+                            optionsCount: select.options.length,
+                            selectedIndex: select.selectedIndex
+                        };
+                    }
+                """),
+                timeout=3.0
+            )
+
+            if not dropdown_state.get('exists'):
+                # select要素自体が存在しない
+                if check_attempt < 2:
+                    await asyncio.sleep(1)
+                    continue
+                logger.warning(f"{hospital_name}: プルダウン要素が見つかりません")
+                return False
+
+            if not dropdown_state.get('ready'):
+                # select要素はあるがまだ準備できていない（selectedIndex=-1）
+                if check_attempt < 2:
+                    logger.debug(f"{hospital_name}: プルダウン準備待ち (試行{check_attempt + 1}/3, selectedIndex={dropdown_state.get('selectedIndex')})")
+                    await asyncio.sleep(1)
+                    continue
+                # 3回試行しても準備できない場合はスキップ
+                logger.debug(f"{hospital_name}: プルダウンがまだ準備中のためスキップ")
+                return True  # エラーではないのでTrueを返す
+
+            current_value = dropdown_state.get('value')
+            break
+
         if current_value is None:
-            logger.warning(f"{hospital_name}: プルダウン要素が見つかりません")
-            return False
+            return True  # 取得できなかった場合はスキップ
 
         # すでに「全日」(value='')なら何もしない
         if current_value == '':
             return True
-        
+
         # 「全日」でない場合は設定を変更
         logger.info(f"{hospital_name}: プルダウンが「全日」ではないため再設定します (現在値: '{current_value}')")
-        
-        await page.select_option('select#outer-home-recept-list-period', value='')
-        await asyncio.sleep(1)
-        
-        # 変更を確認
-        verify_value = await page.evaluate("""
+
+        # JavaScript経由で直接変更（changeイベント発火）
+        change_result = await page.evaluate("""
             () => {
                 const select = document.querySelector('select#outer-home-recept-list-period');
-                if (!select || select.selectedIndex < 0) return null;
-                const selectedOption = select.options[select.selectedIndex];
-                return selectedOption ? (selectedOption.value || '') : null;
+                if (!select) return { success: false, error: 'select要素なし' };
+
+                // value=''のoptionのindexを探す
+                let targetIndex = -1;
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === '') {
+                        targetIndex = i;
+                        break;
+                    }
+                }
+
+                if (targetIndex < 0) return { success: false, error: 'value空のoption未発見' };
+
+                // selectedIndexを直接設定
+                select.selectedIndex = targetIndex;
+
+                // changeイベントを発火
+                const event = new Event('change', { bubbles: true });
+                select.dispatchEvent(event);
+
+                return { success: true, selectedIndex: select.selectedIndex };
             }
         """)
-        
-        if verify_value == '':
-            logger.info(f"{hospital_name}: プルダウンを「全日」に再設定しました")
-            return True
-        else:
-            logger.warning(f"{hospital_name}: プルダウンの再設定に失敗 (設定後: '{verify_value}')")
+
+        if not change_result.get('success'):
+            logger.warning(f"{hospital_name}: プルダウン変更失敗: {change_result}")
             return False
-            
+
+        # ページ更新を待つ（長めに）
+        await asyncio.sleep(3)
+
+        # 変更を確認（リトライ付き）
+        for verify_attempt in range(3):
+            verify_state = await page.evaluate("""
+                () => {
+                    const select = document.querySelector('select#outer-home-recept-list-period');
+                    if (!select) return { exists: false };
+                    if (select.selectedIndex < 0) return { exists: true, ready: false, selectedIndex: select.selectedIndex };
+                    const selectedOption = select.options[select.selectedIndex];
+                    return {
+                        exists: true,
+                        ready: true,
+                        value: selectedOption ? (selectedOption.value || '') : null
+                    };
+                }
+            """)
+
+            if verify_state.get('ready') and verify_state.get('value') == '':
+                logger.info(f"{hospital_name}: プルダウンを「全日」に再設定しました")
+                return True
+
+            if verify_attempt < 2:
+                await asyncio.sleep(1)
+
+        logger.warning(f"{hospital_name}: プルダウンの再設定確認に失敗（処理は継続）")
+        return True  # 確認失敗でも処理は継続
+
+    except asyncio.TimeoutError:
+        logger.debug(f"{hospital_name}: プルダウン確認タイムアウト（処理継続）")
+        return True
     except Exception as e:
         logger.warning(f"{hospital_name}: プルダウン確認中にエラー（処理継続）: {e}")
         return False
+
+
+async def wait_for_dropdown_stable(page, hospital_name, max_wait_seconds=5):
+    """
+    プルダウンが安定するまで待機（selectedIndex >= 0 になるまで）
+    AJAX更新完了を確実に待つための関数
+
+    Args:
+        page: Playwrightのpageインスタンス
+        hospital_name: 医療機関名
+        max_wait_seconds: 最大待機秒数（デフォルト5秒）
+
+    Returns:
+        bool: 安定化成功ならTrue、タイムアウトならFalse
+    """
+    start_time = asyncio.get_event_loop().time()
+    check_interval = 0.3  # 300msごとにチェック
+
+    while True:
+        elapsed = asyncio.get_event_loop().time() - start_time
+        if elapsed >= max_wait_seconds:
+            logger.warning(f"{hospital_name}: プルダウン安定化待機タイムアウト（{max_wait_seconds}秒）")
+            return False
+
+        try:
+            dropdown_state = await asyncio.wait_for(
+                page.evaluate("""
+                    () => {
+                        const select = document.querySelector('select#outer-home-recept-list-period');
+                        if (!select) return { exists: false };
+                        if (select.selectedIndex < 0 || select.options.length === 0) {
+                            return { exists: true, ready: false, selectedIndex: select.selectedIndex };
+                        }
+                        const selectedOption = select.options[select.selectedIndex];
+                        return {
+                            exists: true,
+                            ready: true,
+                            value: selectedOption ? (selectedOption.value || '') : null,
+                            text: selectedOption ? (selectedOption.text || '') : null,
+                            selectedIndex: select.selectedIndex
+                        };
+                    }
+                """),
+                timeout=2.0
+            )
+
+            if dropdown_state.get('ready'):
+                logger.debug(
+                    f"{hospital_name}: プルダウン安定化完了 - "
+                    f"value='{dropdown_state.get('value')}', "
+                    f"text='{dropdown_state.get('text')}', "
+                    f"経過時間: {elapsed:.1f}秒"
+                )
+                return True
+
+            # まだ準備中（selectedIndex=-1など）
+            logger.debug(
+                f"{hospital_name}: プルダウン準備待ち中 - "
+                f"selectedIndex={dropdown_state.get('selectedIndex')}, "
+                f"経過時間: {elapsed:.1f}秒"
+            )
+
+        except asyncio.TimeoutError:
+            logger.debug(f"{hospital_name}: プルダウン状態確認タイムアウト、再試行")
+        except Exception as e:
+            logger.debug(f"{hospital_name}: プルダウン状態確認エラー: {e}、再試行")
+
+        await asyncio.sleep(check_interval)
+
 
 async def perform_page_reload(page, hospital_name):
     """
